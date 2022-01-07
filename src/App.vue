@@ -1,21 +1,52 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import SearchBar from "./components/SearchBar.vue";
+import SongDisplay from "./components/SongDisplay.vue";
+import ControlBar from "./components/ControlBar.vue";
+import SongBackdrop from "./components/SongBackdrop.vue";
+import PlaylistView from "./components/PlaylistView.vue";
+import AlbumView from "./components/AlbumView.vue";
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+    <SongBackdrop />
+    <main>
+        <SearchBar />
+        <SongDisplay />
+        <ControlBar />
+    </main>
+    <PlaylistView />
+    <AlbumView />
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+body, html {
+    overflow: hidden !important;
+    background: black;
+}
+
+* {
+    font-family: "IBM Plex Mono", Consolas, "Courier New", monospace !important;
+}
+
+:not(select):not(option):not(path) {
+    color: white !important;
+}
+
+main {
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 </style>
