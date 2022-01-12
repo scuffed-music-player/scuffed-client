@@ -15,7 +15,7 @@ async function loadSong() {
 
     const q = encodeURIComponent(query.value.trim().toLowerCase());
 
-    const dataResponse = await request("GET")(`/api/stream/${q}%20audio`)
+    const dataResponse = await request("GET")(`/api/search/${q}%20audio`);
     const videoData = await dataResponse.json() as { success: boolean, song: ISongData };
 
     if (!videoData.success) {

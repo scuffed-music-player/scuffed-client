@@ -8,6 +8,9 @@ export const user = reactive({
     token: undefined as string | undefined,
 });
 
+//@ts-ignore
+window.__user = user;
+
 export const request = (method: string) => (endpoint: string, init?: RequestInit) => fetch(`${BASE_URL}${endpoint}`, {
     ...init,
     method,
