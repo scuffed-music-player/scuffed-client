@@ -9,6 +9,7 @@ export const recursivePrompt = async (title: string, d: string): Promise<string>
         inputValue: d,
         allowEscapeKey: false,
         allowOutsideClick: false,
+        icon: "question"
     });
     
     return res.value as string;

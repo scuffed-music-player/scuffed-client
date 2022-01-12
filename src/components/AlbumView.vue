@@ -49,11 +49,11 @@ async function addAlbum({ _id, name, artist }: Omit<IAlbum, "songs">) {
     const albumName = `${artist} - ${name}`;
 
     if (playlists.value?.find(p => p.name === albumName)) {
-        await Swal.fire("Looks like you've already saved this album.");
+        await Swal.fire("Looks like you've already saved this album.", "You're just that good I guess, try another album?", "info");
         return;
     }
 
-    const res = await request("GET")(`/api/albums/${_id}`); 
+    const res = await request("GET")(`/api/album/${_id}`); 
     const { album, success } = (await res.json()) as { album: IAlbum, success: boolean };
     if (success) {
         playlists.value.push({
@@ -67,7 +67,7 @@ async function addAlbum({ _id, name, artist }: Omit<IAlbum, "songs">) {
             }
         });
 
-        await Swal.fire("Added to playlists!");
+        await Swal.fire("Added to playlists!", "Head to the playlists page to view it!", "success");
     }
 }
 

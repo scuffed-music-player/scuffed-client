@@ -20,7 +20,7 @@ async function loadSong() {
 
     if (!videoData.success) {
         player.states.loading = false;
-        return await Swal.fire("couldn't find any song with that sorry");
+        return await Swal.fire("couldn't find a song.", "Try some different search criteria, that search didn't work.", "error");
     }
 
     overrideQueue({

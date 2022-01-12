@@ -39,6 +39,8 @@ async function deletePlaylist() {
 
     const { isConfirmed } = await Swal.fire({
         title: `Are you sure you want to delete "${currentPlaylist.value?.name}"?`,
+        html: "Due to legal liabilities, we are unable to offer restoration of deleted playlists.",
+        icon: "question",
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
@@ -84,6 +86,8 @@ async function uploadAlbum() {
 
     const { isConfirmed } = await Swal.fire({
         title: "If this playlist is an album, you can upload to our database. Do you want to do so?",
+        html: "To give the best experience to your fellow listeners, double-check the song order, covers, and titles.",
+        icon: "question",
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
@@ -97,7 +101,7 @@ async function uploadAlbum() {
     const name = (await recursivePrompt("What's this album called?", currentPlaylist.value?.name)).toLowerCase();
     const artist = (await recursivePrompt("Who made the album?", "")).toLowerCase();
 
-    await Swal.fire("Thanks for contributing!");
+    await Swal.fire("Thanks for contributing!", "Means a lot <33333!", "success");
 
     const res = await request("POST")(`/api/upload`, {
         body: JSON.stringify({
