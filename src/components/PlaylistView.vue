@@ -6,7 +6,7 @@ import { ui } from "../state/ui";
 import { overrideQueue } from "../state/queue";
 import { playlists, currentPlaylistId, currentPlaylist } from "../state/playlists";
 import { recursivePrompt } from "../helpers/recursivePrompt";
-import { user } from "../state/user";
+import { request, user } from "../state/user";
 import Swal from "sweetalert2";
 import Draggable from "vuedraggable";
 
@@ -99,11 +99,7 @@ async function uploadAlbum() {
 
     await Swal.fire("Thanks for contributing!");
 
-    const res = await fetch(`${user.serverURL}/api/upload`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+    const res = await request("POST")(`/api/upload`, {
         body: JSON.stringify({
             album: {
                 name,

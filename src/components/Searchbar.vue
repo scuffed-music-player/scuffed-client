@@ -4,7 +4,7 @@ import { ref } from "vue";
 import { ISongData, player } from "../state/player";
 import { overrideQueue } from "../state/queue";
 import { ui } from "../state/ui";
-import { user } from "../state/user";
+import { request } from "../state/user";
 
 const query = ref("");
 
@@ -13,12 +13,9 @@ async function loadSong() {
     player.states.loading = true;
     player.audio?.pause();
 
-    const q = encodeURIComponent(query.value.toLowerCase().includes("sibo") ? 
-        "never gonna give you up rick astley" :
-        query.value.trim()
-    );
+    const q = encodeURIComponent(query.value.trim().toLowerCase());
 
-    const dataResponse = await fetch(`${user.serverURL}/api/data/${q}%20audio`);
+    const dataResponse = await request("GET")(`/api/stream/${q}%20audio`)
     const videoData = await dataResponse.json() as { success: boolean, song: ISongData };
 
     if (!videoData.success) {

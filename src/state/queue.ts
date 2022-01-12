@@ -1,50 +1,16 @@
 import { ISongData, player } from "./player";
 import { currentPlaylist } from "./playlists";
-import { user } from "./user";
+import { BASE_URL } from "./user";
 
 let queue: ISongData[] = [];
 let originalQueue: ISongData[] = [];
 let playedSongs: ISongData[] = [];
 
-async function setupMediaSource(song: ISongData) {
-    const ms = new MediaSource();
-    player.audio.src = URL.createObjectURL(ms);
-
-    return new Promise<void>((resolve, reject) => {
-        ms.addEventListener("sourceopen", async () => {
-            const sourceBuffer = ms.addSourceBuffer("audio/mpeg");
-            let stream: ReadableStreamDefaultReader<BufferSource> | undefined;
-
-            async function pump(stream: ReadableStreamDefaultReader<BufferSource>) {
-                const { value } = await stream.read();
-                if (value) sourceBuffer.appendBuffer(value);
-            };
-
-            sourceBuffer.addEventListener("updateend", () => stream && pump(stream), false);
-
-            const streamResponse = await fetch(`${user.serverURL}/api/stream/${song.id}`);
-            
-            if (streamResponse.body) {
-                pump(streamResponse.body.getReader());
-                
-                resolve();
-                console.log("hi");
-            } else {
-                reject();
-            }
-        }, false);
-
-        player.audio.play();
-
-        player.audio.addEventListener("playing", () => console.log("wsedrfgbh"), { once: true });
-    });
-}
-
 async function play(song: ISongData) {
     player.states.playing = false;
     player.states.loading = true;
     player.audio.pause();
-    player.audio.src = `${user.serverURL}/api/stream/${song.id}`;
+    player.audio.src = `${BASE_URL}/api/stream/${song.id}`;
     // await setupMediaSource(song);
     player.audio.currentTime = 0;
     await player.audio.play();

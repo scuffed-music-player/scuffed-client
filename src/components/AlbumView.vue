@@ -6,7 +6,7 @@ import { ui } from "../state/ui";
 import { ISongData } from "../state/player";
 import { playlists } from "../state/playlists";
 import { overrideQueue } from "../state/queue";
-import { user } from "../state/user";
+import { request } from "../state/user";
 import Swal from "sweetalert2";
  
 interface IAlbum {
@@ -19,7 +19,7 @@ interface IAlbum {
 const albums = ref<Omit<IAlbum, "songs">[]>([]);
 
 const refreshAlbums = async () => {
-    const res = await fetch(`${user.serverURL}/api/albums`);
+    const res = await request("GET")("/api/albums");
     albums.value = (await res.json()).albums;
 }
 
@@ -53,7 +53,7 @@ async function addAlbum({ _id, name, artist }: Omit<IAlbum, "songs">) {
         return;
     }
 
-    const res = await fetch(`${user.serverURL}/api/albums/${_id}`); 
+    const res = await request("GET")(`/api/albums/${_id}`); 
     const { album, success } = (await res.json()) as { album: IAlbum, success: boolean };
     if (success) {
         playlists.value.push({
@@ -72,7 +72,7 @@ async function addAlbum({ _id, name, artist }: Omit<IAlbum, "songs">) {
 }
 
 async function playAlbum({ _id }: Omit<IAlbum, "songs">, shuffle: boolean = false) {
-    const res = await fetch(`${user.serverURL}/api/albums/${_id}`); 
+    const res = await request("GET")(`/api/album/${_id}`); 
     const { album, success } = (await res.json()) as { album: IAlbum, success: boolean };
     
     if (success) {
