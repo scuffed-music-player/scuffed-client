@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 
 export const BASE_URL = process.env.NODE_ENV === "production" ?
-    "http://localhost:6969" :
+    "https://music-player-app-338003.uw.r.appspot.com/" :
     "http://localhost:8080";
 
 export const user = reactive({
