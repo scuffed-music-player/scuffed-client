@@ -23,7 +23,7 @@ const thumbnailURL = computed(() => player.states.playing ?
                 <img :src="thumbnailURL || ''" alt="cover">
             </div>
             <br><br>
-            <h1 class="title is-1">
+            <h1 class="title is-2">
                 {{ player.title }}
             </h1>
         </div>
@@ -32,7 +32,7 @@ const thumbnailURL = computed(() => player.states.playing ?
 
 <style scoped>
 .thumbnail {
-    --height: 300px;
+    --height: 250px;
     display: inline-flex;
     overflow: hidden;
     justify-content: center;

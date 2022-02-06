@@ -1,5 +1,9 @@
 @import url("bulma/css/bulma.css");
 
+html {
+    font-size: 14px;
+}
+
 .play-btn svg {
     transform: scale(1.5);
 }
