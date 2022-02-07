@@ -11,7 +11,7 @@ const thumbnailURL = computed(() => player.states.playing ?
 
 <template>
     <div 
-        class="song-display p-5 has-text-centered"
+        class="song-display has-text-centered"
         :class="{ playlists: ui.playlistView || ui.albumView }"
     >
         <div>
@@ -71,7 +71,7 @@ const thumbnailURL = computed(() => player.states.playing ?
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 75vw;
+    max-width: 100vw;
     align-self: center;
     opacity: 1;
     transition: 0.5s opacity;
