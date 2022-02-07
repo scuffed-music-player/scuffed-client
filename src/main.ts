@@ -9,19 +9,19 @@ import { request, user } from "./state/user";
 registerSW({ immediate: true });
 createApp(App).mount("#app");
 
-(async () => {
-    const username = await recursivePrompt("Username please?", "");
-    const password = await recursivePrompt("Password please?", "");
+// (async () => {
+//     const username = await recursivePrompt("Username please?", "");
+//     const password = await recursivePrompt("Password please?", "");
 
-    const res = await request("POST")("/api/login", {
-        body: JSON.stringify({ username, password })
-    });
+//     const res = await request("POST")("/api/login", {
+//         body: JSON.stringify({ username, password })
+//     });
 
-    const data = await res.json() as { success: boolean, token: string };
+//     const data = await res.json() as { success: boolean, token: string };
 
-    if (data.success) {
-        user.token = data.token;
-    } else {
-        location.reload();
-    }
-})();
+//     if (data.success) {
+//         user.token = data.token;
+//     } else {
+//         location.reload();
+//     }
+// })();
