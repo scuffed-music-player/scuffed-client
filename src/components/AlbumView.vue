@@ -131,7 +131,7 @@ async function playAlbum({ _id }: Omit<IAlbum, "songs">, shuffle: boolean = fals
             <div class="albums">
                 <div class="album my-2 is-flex is-align-items-center" v-for="album in filteredAlbums">
                     <div>
-                        <h3 class="is-size-3 has-text-weight-bold">{{ album.name }}</h3>
+                        <h3 class="is-size-4 has-text-weight-bold">{{ album.name }}</h3>
                         <h4>{{ album.artist }}</h4>
                     </div>
 
@@ -157,7 +157,11 @@ async function playAlbum({ _id }: Omit<IAlbum, "songs">, shuffle: boolean = fals
                                 </button>
                             </p>
                             <p class="control">
-                                <button class="button is-dark" @click="addAlbum(album)">save</button>
+                                <button class="button is-dark" @click="addAlbum(album)">
+                                    <div class="icon">
+                                        <span class="iconify" data-icon="ic:outline-library-music" data-width="25" />
+                                    </div>
+                                </button>
                             </p>
                     </div>
                 </div>
