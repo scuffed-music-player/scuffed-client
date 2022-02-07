@@ -207,7 +207,9 @@ async function uploadAlbum() {
                                 official album
                             </button>
                             <button class="button is-danger" @click="deletePlaylist">
-                                delete
+                                <span class="icon">
+                                    <span class="iconify" data-icon="gg:trash"></span>
+                                </span>
                             </button>
                         </div>
                         <div class="field has-addons mb-0 ml-auto" v-else>
@@ -219,22 +221,30 @@ async function uploadAlbum() {
                                     class="button is-success"
                                     @click="addCurrentSong"
                                 >
-                                    add song
+                                    <span class="icon">
+                                        <span class="iconify" data-icon="carbon:music-add"></span>
+                                    </span>
                                 </button>
                             </p>
                             <p class="control">
                                 <button class="button is-danger" @click="deletePlaylist">
-                                    delete
+                                    <span class="icon">
+                                        <span class="iconify" data-icon="gg:trash"></span>
+                                    </span>
                                 </button>
                             </p>
                             <p class="control">
                                 <button class="button is-link" @click="renamePlaylist">
-                                    rename
+                                    <span class="icon">
+                                        <span class="iconify" data-icon="mdi:playlist-edit"></span>
+                                    </span>
                                 </button>
                             </p>
                             <p class="control">
                                 <button class="button is-dark" @click="uploadAlbum" style="background: #161616;">
-                                    upload
+                                    <span class="icon">
+                                        <span class="iconify" data-icon="feather:upload"></span>
+                                    </span>
                                 </button>
                             </p>
                         </div>

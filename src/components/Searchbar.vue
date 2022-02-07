@@ -54,11 +54,11 @@ async function loadSong() {
 
 <template>
     <div class="searchbar" :class="{ playlists: ui.playlistView || ui.albumView }">
-        <b class="is-size-4 mr-5">music player</b>
+        <b class="is-size-5 mr-5">music player</b>
         <form class="field has-addons" @submit.prevent="loadSong">
             <p class="control input-conent">
                 <input 
-                    class="input is-large" 
+                    class="input is-medium" 
                     v-model="query" 
                     placeholder="search a song" 
                     required
@@ -66,7 +66,7 @@ async function loadSong() {
             </p>
             <p class="control">
                 <button 
-                    class="button is-success is-large" 
+                    class="button is-success is-medium" 
                     type="submit"
                 >
                     <div class="icon">
@@ -76,7 +76,7 @@ async function loadSong() {
             </p>
             <p class="control">
                 <button 
-                    class="button is-link is-large hide-mobile"
+                    class="button is-link is-medium hide-mobile"
                     @click.prevent="ui.albumView = true"
                 >
                     albums
@@ -85,8 +85,8 @@ async function loadSong() {
         </form>
     </div>
     <div class="show-mobile-flex" :class="{ playlists: ui.playlistView || ui.albumView }">
-        <button class="button is-flex-grow-1 is-primary" @click="ui.playlistView = true">my library</button>
-        <button class="button is-flex-grow-1 is-link" @click="ui.albumView = true">online albums</button>
+        <button class="button is-flex-grow-1 is-small is-primary" @click="ui.playlistView = true">my library</button>
+        <button class="button is-flex-grow-1 is-small is-dark is-active" @click="ui.albumView = true">online albums</button>
     </div>
 </template>
 
@@ -111,7 +111,7 @@ async function loadSong() {
 }
 
 @media screen and (max-width: 800px) {
-    .is-size-4 {
+    .is-size-5 {
         display: none;
     }
 
