@@ -44,73 +44,62 @@ function changePosition({ clientX, target }: MouseEvent) {
 <template>
     <div class="control-bar">
         <div class="controls pt-4 px-4">
-            <div class="part title-part">
-                <p class="is-size-6">{{ player.song.title }}</p>
-            </div>
-            <div class="part controls-part">
-                <div class="buttons">
-                    <button 
-                        class="play-btn mx-3 button is-ghost is-medium" 
-                        @click="player.audio && (player.audio.currentTime = 0);"
-                        :disabled="showPlayButton === 'disabled'"
-                    >
-                        <span class="icon">
-                            <span class="iconify" data-icon="ic:sharp-restart-alt" />
-                        </span>
-                    </button>
-                    <button 
-                        class="play-btn mr-3 button is-ghost is-medium" 
-                        @click="prevSong"
-                        :disabled="showPlayButton === 'disabled'"
-                    >
-                        <span class="icon">
-                            <span class="iconify" data-icon="bx:bx-rewind" />
-                        </span>
-                    </button>
-                    <button 
-                        v-show="showPlayButton !== 'off'"
-                        class="play-btn mr-3 button is-ghost is-medium" 
-                        @click="player.states.paused = false"
-                        :disabled="showPlayButton === 'disabled'"
-                    >
-                        <span class="icon">
-                            <span class="iconify" data-icon="gg:play-button-o" />
-                        </span>
-                    </button>
-                    <button 
-                        v-show="showPlayButton === 'off'"    
-                        class="play-btn mr-3 button is-ghost is-medium" 
-                        @click="player.states.paused = true"
-                    >
-                        <span class="icon">
-                            <span class="iconify" data-icon="gg:play-pause-o" />
-                        </span>
-                    </button>
-                    <button 
-                        class="play-btn mr-3 button is-ghost is-medium" 
-                        @click="nextSong"
-                        :disabled="showPlayButton === 'disabled'"
-                    >
-                        <span class="icon">
-                            <span class="iconify" data-icon="bx:bx-fast-forward" />
-                        </span>
-                    </button>
-                    <button 
-                        class="play-btn mr-3 button is-ghost is-medium" 
-                        @click="player.states.looping = !player.states.looping"
-                        :class="{ active: player.states.looping }"
-                    >
-                        <span class="icon">
-                            <span class="iconify" data-icon="ic:outline-repeat"></span>
-                        </span>
-                    </button>
-                </div>
-            </div>
-            <div class="part volume-part">
-                <span class="is-size-4 mr-3 is-flex is-align-items-center">
-                    <span class="iconify" data-icon="carbon:volume-up-filled"></span>
-                </span>
-                <input type="range" v-model="player.volume" >
+            <div class="buttons">
+                <button 
+                    class="play-btn mx-3 button is-ghost is-medium" 
+                    @click="player.audio && (player.audio.currentTime = 0);"
+                    :disabled="showPlayButton === 'disabled'"
+                >
+                    <span class="icon">
+                        <span class="iconify" data-icon="ic:sharp-restart-alt" />
+                    </span>
+                </button>
+                <button 
+                    class="play-btn mr-3 button is-ghost is-medium" 
+                    @click="prevSong"
+                    :disabled="showPlayButton === 'disabled'"
+                >
+                    <span class="icon">
+                        <span class="iconify" data-icon="bx:bx-rewind" />
+                    </span>
+                </button>
+                <button 
+                    v-show="showPlayButton !== 'off'"
+                    class="play-btn mr-3 button is-ghost is-medium" 
+                    @click="player.states.paused = false"
+                    :disabled="showPlayButton === 'disabled'"
+                >
+                    <span class="icon">
+                        <span class="iconify" data-icon="gg:play-button-o" />
+                    </span>
+                </button>
+                <button 
+                    v-show="showPlayButton === 'off'"    
+                    class="play-btn mr-3 button is-ghost is-medium" 
+                    @click="player.states.paused = true"
+                >
+                    <span class="icon">
+                        <span class="iconify" data-icon="gg:play-pause-o" />
+                    </span>
+                </button>
+                <button 
+                    class="play-btn mr-3 button is-ghost is-medium" 
+                    @click="nextSong"
+                    :disabled="showPlayButton === 'disabled'"
+                >
+                    <span class="icon">
+                        <span class="iconify" data-icon="bx:bx-fast-forward" />
+                    </span>
+                </button>
+                <button 
+                    class="play-btn mr-3 button is-ghost is-medium" 
+                    @click="player.states.looping = !player.states.looping"
+                    :class="{ active: player.states.looping }"
+                >
+                    <span class="icon">
+                        <span class="iconify" data-icon="ic:outline-repeat"></span>
+                    </span>
+                </button>
             </div>
         </div>
         <div class="time-display p-4">
@@ -146,12 +135,7 @@ function changePosition({ clientX, target }: MouseEvent) {
 .controls {
     display: flex;
     align-items: center;
-}
-
-.controls .part {
-    flex: 1;
-    display: flex;
-    align-items: center;
+    justify-content: center;
 }
 
 .checkbox.loop:hover {
@@ -174,23 +158,5 @@ function changePosition({ clientX, target }: MouseEvent) {
 
 .play-toggle {
     width: 50px;
-}
-
-.controls-part {
-    justify-content: center;
-}
-
-.volume-part {
-    justify-content: flex-end;
-}
-
-@media screen and (max-width: 800px) {
-    .controls .title-part, .controls .volume-part {
-        display: none;
-    }
-
-    .controls .volume-part {
-        justify-content: flex-start;
-    }
 }
 </style>
