@@ -286,7 +286,7 @@ async function downloadSong({ id }: ISongData) {
                                     </span>
                                 </button>
 
-                                <span class="is-size-6" @dblclick="overrideQueue(element)">{{ element.title }}</span>
+                                <span @dblclick="overrideQueue(element)" style="font-size: 0.85rem;">{{ element.title }}</span>
 
                                 <div class="ml-auto mr-2 field" style="min-width: 78.75px;" v-if="!currentPlaylist.album">
                                     <button class="play-btn button is-ghost is-small" @click="updateSong(element)">
