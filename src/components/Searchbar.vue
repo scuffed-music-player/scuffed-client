@@ -74,14 +74,14 @@ async function loadSong() {
                     </div>
                 </button>
             </p>
-            <p class="control">
+            <!-- <p class="control">
                 <button 
                     class="button is-link is-medium hide-mobile"
                     @click.prevent="ui.albumView = true"
                 >
                     albums
                 </button>
-            </p>
+            </p> -->
         </form>
     </div>
     <div class="show-mobile-flex" :class="{ playlists: ui.playlistView || ui.albumView }">

@@ -144,7 +144,7 @@ async function uploadAlbum() {
                     <span class="info-display">
                         {{ 
                             playlists.length > 0 ? 
-                            `currently displaying ${currentPlaylist?.album ? "album" : "playlist"}` : 
+                            `current ${currentPlaylist?.album ? "album" : "playlist"}` : 
                             "no playlists" 
                         }}
                     </span>
@@ -167,124 +167,131 @@ async function uploadAlbum() {
                 </div>
             </div>
 
-            <div class="playlist mt-5 px-5">
+            <div v-if="currentPlaylist" class="playlist-choices is-flex is-align-items-center my-5">
+                <div class="field has-addons icon-choices">
+                    <p class="control">
+                        <button 
+                            class="play-btn button is-primary" 
+                            @click="currentPlaylist && overrideQueue(...currentPlaylist.songs)"
+                        >
+                            <span class="icon">
+                                <span class="iconify" data-icon="dashicons:controls-play"></span>
+                            </span>
+                        </button>
+                    </p>
+                    <p class="control">
+                        <button 
+                            class="play-btn button is-link"
+                            @click="currentPlaylist && overrideQueue(...[...currentPlaylist.songs].sort(() => 0.5 - Math.random()))"
+                        >
+                            <span class="icon">
+                                <span class="iconify" data-icon="ic:baseline-shuffle"></span>
+                            </span>
+                        </button>
+                    </p>
+                </div>
+
+                <div class="field has-addons mb-0 ml-auto" v-if="currentPlaylist.album">
+                    <button 
+                        class="button is-ghost"
+                        style="pointer-events: none;"
+                    >
+                        official album
+                    </button>
+                    <button class="button is-danger" @click="deletePlaylist">
+                        <span class="icon">
+                            <span class="iconify" data-icon="gg:trash"></span>
+                        </span>
+                    </button>
+                </div>
+                <div class="field has-addons mb-0 ml-auto" v-else>
+                    <p 
+                        v-if="player.states.playing"
+                        class="control"
+                    >
+                        <button 
+                            class="button is-success"
+                            @click="addCurrentSong"
+                        >
+                            <span class="icon">
+                                <span class="iconify" data-icon="carbon:music-add"></span>
+                            </span>
+                        </button>
+                    </p>
+                    <p class="control">
+                        <button class="button is-danger" @click="deletePlaylist">
+                            <span class="icon">
+                                <span class="iconify" data-icon="gg:trash"></span>
+                            </span>
+                        </button>
+                    </p>
+                    <p class="control">
+                        <button class="button is-link" @click="renamePlaylist">
+                            <span class="icon">
+                                <span class="iconify" data-icon="mdi:playlist-edit"></span>
+                            </span>
+                        </button>
+                    </p>
+                    <!-- <p class="control">
+                        <button class="button is-dark" @click="uploadAlbum" style="background: #161616;">
+                            <span class="icon">
+                                <span class="iconify" data-icon="feather:upload"></span>
+                            </span>
+                        </button>
+                    </p> -->
+                </div>
+            </div>
+
+            <div class="playlist">
                 <br>
                 <template v-if="currentPlaylist">
-                    <div class="playlist-choices is-flex is-align-items-center mb-5">
-                        <div class="field has-addons icon-choices mb-0">
-                            <p class="control">
-                                <button 
-                                    class="play-btn button is-primary" 
-                                    @click="currentPlaylist && overrideQueue(...currentPlaylist.songs)"
-                                >
-                                    <span class="icon">
-                                        <span class="iconify" data-icon="dashicons:controls-play"></span>
-                                    </span>
-                                </button>
-                            </p>
-                            <p class="control">
-                                <button 
-                                    class="play-btn button is-link"
-                                    @click="currentPlaylist && overrideQueue(...[...currentPlaylist.songs].sort(() => 0.5 - Math.random()))"
-                                >
-                                    <span class="icon">
-                                        <span class="iconify" data-icon="ic:baseline-shuffle"></span>
-                                    </span>
-                                </button>
-                            </p>
-                        </div>
+                    <h3 
+                        v-if="currentPlaylist.songs?.length === 0"
+                        class="is-size-4 mt-3"
+                    >
+                        no songs in this playlist
+                    </h3>
 
-                        <div class="field has-addons mb-0 ml-auto" v-if="currentPlaylist.album">
-                            <button 
-                                class="button is-ghost"
-                                style="pointer-events: none;"
+                    <Draggable 
+                        v-model="currentPlaylist.songs" 
+                        item-key="id"
+                        tag="ul"
+                        class="songs-list"
+                        handle=".drag-handle"
+                    >
+                        <template #item="{ element }">
+                                <li 
+                                class="my-2 is-size-6 song"
                             >
-                                official album
-                            </button>
-                            <button class="button is-danger" @click="deletePlaylist">
-                                <span class="icon">
-                                    <span class="iconify" data-icon="gg:trash"></span>
-                                </span>
-                            </button>
-                        </div>
-                        <div class="field has-addons mb-0 ml-auto" v-else>
-                            <p 
-                                v-if="player.states.playing"
-                                class="control"
-                            >
-                                <button 
-                                    class="button is-success"
-                                    @click="addCurrentSong"
-                                >
+                                <button class="drag-handle button is-ghost">
                                     <span class="icon">
-                                        <span class="iconify" data-icon="carbon:music-add"></span>
+                                        <span class="iconify" data-icon="ic:round-drag-handle"></span>
                                     </span>
                                 </button>
-                            </p>
-                            <p class="control">
-                                <button class="button is-danger" @click="deletePlaylist">
-                                    <span class="icon">
-                                        <span class="iconify" data-icon="gg:trash"></span>
-                                    </span>
-                                </button>
-                            </p>
-                            <p class="control">
-                                <button class="button is-link" @click="renamePlaylist">
-                                    <span class="icon">
-                                        <span class="iconify" data-icon="mdi:playlist-edit"></span>
-                                    </span>
-                                </button>
-                            </p>
-                            <!-- <p class="control">
-                                <button class="button is-dark" @click="uploadAlbum" style="background: #161616;">
-                                    <span class="icon">
-                                        <span class="iconify" data-icon="feather:upload"></span>
-                                    </span>
-                                </button>
-                            </p> -->
-                        </div>
-                    </div>
 
-                        <h3 
-                            v-if="currentPlaylist.songs?.length === 0"
-                            class="is-size-4 mt-3"
-                        >
-                            no songs in this playlist
-                        </h3>
+                                <button class="play-btn mr-3 button is-ghost" @click="overrideQueue(element)">
+                                    <span class="icon">
+                                        <span class="iconify" data-icon="gg:play-button-o"></span>
+                                    </span>
+                                </button>
 
-                        <Draggable 
-                            v-model="currentPlaylist.songs" 
-                            item-key="id"
-                            tag="ul"
-                            class="songs-list"
-                        >
-                            <template #item="{ element }">
-                                 <li 
-                                    class="my-2 is-size-6 song"
-                                >
-                                    <button class="play-btn mr-3 button is-ghost" @click="overrideQueue(element)">
+                                <span @dblclick="overrideQueue(element)">{{ element.title }}</span>
+
+                                <div class="ml-auto mr-2 field" style="min-width: 70px;" v-if="!currentPlaylist.album">
+                                    <button class="play-btn button is-ghost has-text-danger" @click="updateSong(element)">
                                         <span class="icon">
-                                            <span class="iconify" data-icon="gg:play-button-o"></span>
+                                            <span class="iconify" data-icon="mdi:playlist-edit"></span>
                                         </span>
                                     </button>
-
-                                    <span @dblclick="overrideQueue(element)">{{ element.title }}</span>
-
-                                    <div class="ml-auto field" v-if="!currentPlaylist.album">
-                                        <button class="play-btn button is-ghost has-text-danger" @click="updateSong(element)">
-                                            <span class="icon">
-                                                <span class="iconify" data-icon="mdi:playlist-edit"></span>
-                                            </span>
-                                        </button>
-                                        <button class="play-btn delete-btn button is-ghost has-text-danger" @click="deleteSong(element)">
-                                            <span class="icon">
-                                                <span class="iconify" data-icon="gg:trash"></span>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </li>
-                            </template>
-                        </Draggable>
+                                    <button class="play-btn delete-btn button is-ghost has-text-danger" @click="deleteSong(element)">
+                                        <span class="icon">
+                                            <span class="iconify" data-icon="gg:trash"></span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                        </template>
+                    </Draggable>
                 </template>
             </div>
         </div>

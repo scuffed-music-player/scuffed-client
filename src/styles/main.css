@@ -29,7 +29,7 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: rgba(0, 0, 0, 0.375);
     border-radius: 0.5rem;
 }
 
