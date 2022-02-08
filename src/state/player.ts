@@ -4,6 +4,7 @@ export interface ISongData {
     id: string | null;
     title: string | null;
     thumbnail: string | null;
+    downloaded: boolean;
 }
 
 export interface IPlayer {
@@ -33,6 +34,7 @@ export const player = reactive<IPlayer>({
         id: null,
         title: null,
         thumbnail: null,
+        downloaded: false,
     },
     position: 0,
     volume: 100,

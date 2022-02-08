@@ -69,7 +69,8 @@ async function updateSong(song: ISongData) {
     currentPlaylist.value.songs[index] = {
         id: song.id, 
         title: title?.length > 0 ? title : song.title, 
-        thumbnail: thumbnail?.length > 0 ? thumbnail : song.thumbnail, 
+        thumbnail: thumbnail?.length > 0 ? thumbnail : song.thumbnail,
+        downloaded: song.downloaded
     };
 }
 
@@ -120,6 +121,19 @@ async function uploadAlbum() {
         currentPlaylist.value.name = `${artist} - ${name}`;
     }
 }
+
+async function downloadSong({ id }: ISongData) {
+    const songPlaylistId = currentPlaylistId.value;
+    const songPlaylist = playlists.value.find(p => p._id === songPlaylistId);
+
+    const res = await request("GET")(`/api/download/${id}`);
+    const { success } = (await res.json()) as { success: boolean };
+
+    if (success) {
+        const song = songPlaylist?.songs.find(s => s.id === id);
+        if (song) song.downloaded = true;
+    } 
+}
 </script>
 
 <template>
@@ -129,7 +143,7 @@ async function uploadAlbum() {
     />
     
     <div class="playlist-section overlay" :class="{ open: ui.playlistView }">
-        <div class="playlist-view section">
+        <div class="playlist-view py-6 px-3">
             <div class="playlist-selector mb-1">
                 <button 
                     class="button is-danger play-btn close-btn mr-5" 
@@ -219,23 +233,23 @@ async function uploadAlbum() {
                         </button>
                     </p>
                     <p class="control">
-                        <button class="button is-danger" @click="deletePlaylist">
-                            <span class="icon">
-                                <span class="iconify" data-icon="gg:trash"></span>
-                            </span>
-                        </button>
-                    </p>
-                    <p class="control">
                         <button class="button is-link" @click="renamePlaylist">
                             <span class="icon">
                                 <span class="iconify" data-icon="mdi:playlist-edit"></span>
                             </span>
                         </button>
                     </p>
+                    <p class="control">
+                        <button class="button is-danger" @click="deletePlaylist">
+                            <span class="icon">
+                                <span class="iconify" data-icon="gg:trash"></span>
+                            </span>
+                        </button>
+                    </p>
                     <!-- <p class="control">
                         <button class="button is-dark" @click="uploadAlbum" style="background: #161616;">
                             <span class="icon">
-                                <span class="iconify" data-icon="feather:upload"></span>
+                                <span class="iconify" data-icon="feather:upload" />
                             </span>
                         </button>
                     </p> -->
@@ -243,7 +257,6 @@ async function uploadAlbum() {
             </div>
 
             <div class="playlist">
-                <br>
                 <template v-if="currentPlaylist">
                     <h3 
                         v-if="currentPlaylist.songs?.length === 0"
@@ -260,9 +273,7 @@ async function uploadAlbum() {
                         handle=".drag-handle"
                     >
                         <template #item="{ element }">
-                                <li 
-                                class="my-2 is-size-6 song"
-                            >
+                            <li class="mb-2 is-size-6 song">
                                 <button class="drag-handle button is-ghost">
                                     <span class="icon">
                                         <span class="iconify" data-icon="ic:round-drag-handle"></span>
@@ -275,15 +286,25 @@ async function uploadAlbum() {
                                     </span>
                                 </button>
 
-                                <span @dblclick="overrideQueue(element)">{{ element.title }}</span>
+                                <span class="is-size-6" @dblclick="overrideQueue(element)">{{ element.title }}</span>
 
-                                <div class="ml-auto mr-2 field" style="min-width: 70px;" v-if="!currentPlaylist.album">
-                                    <button class="play-btn button is-ghost has-text-danger" @click="updateSong(element)">
+                                <div class="ml-auto mr-2 field" style="min-width: 78.75px;" v-if="!currentPlaylist.album">
+                                    <button class="play-btn button is-ghost is-small" @click="updateSong(element)">
                                         <span class="icon">
                                             <span class="iconify" data-icon="mdi:playlist-edit"></span>
                                         </span>
                                     </button>
-                                    <button class="play-btn delete-btn button is-ghost has-text-danger" @click="deleteSong(element)">
+                                    <button v-show="!element.downloaded" class="play-btn active button is-ghost is-small" @click="downloadSong(element)">
+                                        <span class="icon">
+                                            <span class="iconify" data-icon="feather:download"></span>
+                                        </span>
+                                    </button>
+                                    <button v-show="element.downloaded" class="play-btn info button is-ghost is-small">
+                                        <span class="icon">
+                                            <span class="iconify" data-icon="feather:check-square"></span>
+                                        </span>
+                                    </button>
+                                    <button class="play-btn delete-btn button is-ghost is-small" @click="deleteSong(element)">
                                         <span class="icon">
                                             <span class="iconify" data-icon="gg:trash"></span>
                                         </span>

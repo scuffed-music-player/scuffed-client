@@ -17,6 +17,10 @@ html {
     color: #48c78e !important;
 }
 
+.play-btn.info:not(.delete-btn) svg path {
+    color: #48adff !important;
+}
+
 .play-btn[disabled] {
     background-color: transparent;
     border-color: transparent;
