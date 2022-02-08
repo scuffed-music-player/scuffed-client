@@ -130,7 +130,7 @@ async function uploadAlbum() {
     
     <div class="playlist-section overlay" :class="{ open: ui.playlistView }">
         <div class="playlist-view section">
-            <div class="playlist-selector">
+            <div class="playlist-selector mb-1">
                 <button 
                     class="button is-danger play-btn close-btn mr-5" 
                     @click="ui.playlistView = false"
@@ -151,14 +151,14 @@ async function uploadAlbum() {
 
                     <div class="field has-addons">
                         <p v-if="playlists.length > 0" class="control selector">
-                            <div class="select is-medium">
+                            <div class="select">
                                 <select v-model="currentPlaylistId">
                                     <option v-for="playlist in playlists" :key="playlist._id" :value="playlist._id">{{ playlist.name }}</option>
                                 </select>
                             </div>
                         </p>
                         <p class="control">
-                            <button class="button is-primary is-medium" @click="createPlaylist">
+                            <button class="button is-primary" @click="createPlaylist">
                                 <span class="iconify" data-icon="gg:play-list-add" />
                                 <span class="ml-2 hide-mobile">new playlist</span>
                             </button>
