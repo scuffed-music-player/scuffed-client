@@ -163,11 +163,6 @@ async function uploadAlbum() {
                                 <span class="ml-2 hide-mobile">new playlist</span>
                             </button>
                         </p>
-                        <p class="control hide-mobile">
-                            <button class="button is-link is-medium" @click="ui.playlistView = false; ui.albumView = true;">
-                                <span class="ml-2">albums</span>
-                            </button>
-                        </p>
                     </div>
                 </div>
             </div>

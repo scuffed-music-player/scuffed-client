@@ -85,8 +85,8 @@ async function loadSong() {
         </form>
     </div>
     <div class="show-mobile-flex" :class="{ playlists: ui.playlistView || ui.albumView }">
-        <button class="button is-flex-grow-1 is-small is-primary" @click="ui.playlistView = true">my library</button>
-        <button class="button is-flex-grow-1 is-small is-dark is-active" @click="ui.albumView = true">online albums</button>
+        <button class="button is-flex-grow-1 is-dark is-active" @click="ui.playlistView = true">my library</button>
+        <!-- <button class="button is-flex-grow-1 is-small is-dark is-active" @click="ui.albumView = true">online albums</button> -->
     </div>
 </template>
 
