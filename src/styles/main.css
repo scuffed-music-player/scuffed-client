@@ -58,7 +58,7 @@ input:not(.swal2-input), select, option {
 .overlay {
     position: fixed;
     top: 0;
-    bottom: 8rem;
+    bottom: 7.5rem;
     display: flex;
     z-index: 5;
 }

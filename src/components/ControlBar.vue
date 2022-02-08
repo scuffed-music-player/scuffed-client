@@ -50,7 +50,7 @@ function changePosition({ clientX, target }: MouseEvent) {
             <div class="part controls-part">
                 <div class="buttons">
                     <button 
-                        class="play-btn mr-3 button is-ghost is-medium" 
+                        class="play-btn mx-3 button is-ghost is-medium" 
                         @click="player.audio && (player.audio.currentTime = 0);"
                         :disabled="showPlayButton === 'disabled'"
                     >
