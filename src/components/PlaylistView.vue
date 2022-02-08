@@ -59,18 +59,12 @@ async function updateSong(song: ISongData) {
     if (!currentPlaylist.value) return;
 
     const title = (await recursivePrompt("What's this song called?", song.title || "")).toLowerCase();
-    const thumbnail = await recursivePrompt(
-        "Link to the cover art? (if you don't know don't change the default)", 
-        song.thumbnail || ""
-    );
 
     const index = currentPlaylist.value.songs.findIndex(s => s.id === song.id);
 
     currentPlaylist.value.songs[index] = {
-        id: song.id, 
+        ...song,
         title: title?.length > 0 ? title : song.title, 
-        thumbnail: thumbnail?.length > 0 ? thumbnail : song.thumbnail,
-        downloaded: song.downloaded
     };
 }
 
