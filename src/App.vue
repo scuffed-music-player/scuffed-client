@@ -4,7 +4,6 @@ import SongDisplay from "./components/SongDisplay.vue";
 import ControlBar from "./components/ControlBar.vue";
 import SongBackdrop from "./components/SongBackdrop.vue";
 import PlaylistView from "./components/PlaylistView.vue";
-// import AlbumView from "./components/AlbumView.vue";
 </script>
 
 <template>
@@ -15,7 +14,6 @@ import PlaylistView from "./components/PlaylistView.vue";
         <ControlBar />
     </main>
     <PlaylistView />
-    <!-- <AlbumView /> -->
 </template>
 
 <style>

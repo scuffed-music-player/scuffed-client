@@ -40,7 +40,6 @@ const thumbnailURL = computed(() => player.states.playing ?
     width: calc(calc(16 / 9) * var(--height));
     height: var(--height);
     border-radius: 30px;
-    /* border: 3px white solid; */
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
     transition: width 0.25s, transform 0.25s;
     cursor: pointer;

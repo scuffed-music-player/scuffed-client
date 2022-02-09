@@ -240,13 +240,6 @@ async function downloadSong({ id }: ISongData) {
                             </span>
                         </button>
                     </p>
-                    <!-- <p class="control">
-                        <button class="button is-dark" @click="uploadAlbum" style="background: #161616;">
-                            <span class="icon">
-                                <span class="iconify" data-icon="feather:upload" />
-                            </span>
-                        </button>
-                    </p> -->
                 </div>
             </div>
 
