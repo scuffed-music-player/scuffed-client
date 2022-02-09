@@ -1,6 +1,6 @@
 import { ISongData, player } from "./player";
 import { currentPlaylist } from "./playlists";
-import { BASE_URL, user } from "./user";
+import { BASE_URL } from "../helpers/request";
 
 let queue: ISongData[] = [];
 let originalQueue: ISongData[] = [];
@@ -10,10 +10,6 @@ async function play(song: ISongData) {
     player.states.playing = false;
     player.states.loading = true;
     player.audio.pause();
-    // const payload = window.btoa(JSON.stringify({
-    //     token: user.token,
-    //     id: song.id,
-    // }));
     player.audio.src = `${BASE_URL}/api/stream/${song.id}`;
     player.audio.currentTime = 0;
     await player.audio.play();

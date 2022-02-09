@@ -12,7 +12,7 @@ const thumbnailURL = computed(() => player.states.playing ?
 <template>
     <div 
         class="song-display has-text-centered"
-        :class="{ playlists: ui.playlistView || ui.albumView }"
+        :class="{ playlists: ui.playlistView }"
     >
         <div>
             <div 

@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 import "@sweetalert2/theme-dark/dark.css";
 
-export const recursivePrompt = async (title: string, d: string): Promise<string> => {
+export const question = async (title: string, d: string): Promise<string> => {
     const res = await Swal.fire<string>({
         title,
         input: "text",

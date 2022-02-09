@@ -4,7 +4,7 @@ import { ref } from "vue";
 import { ISongData, player } from "../state/player";
 import { overrideQueue } from "../state/queue";
 import { ui } from "../state/ui";
-import { request } from "../state/user";
+import { request } from "../helpers/request";
 
 const query = ref("");
 
@@ -53,7 +53,7 @@ async function loadSong() {
 </script>
 
 <template>
-    <div class="searchbar" :class="{ playlists: ui.playlistView || ui.albumView }">
+    <div class="searchbar" :class="{ playlists: ui.playlistView }">
         <b class="is-size-5 mr-5">music player</b>
         <form class="field has-addons" @submit.prevent="loadSong">
             <p class="control input-conent">
@@ -76,7 +76,7 @@ async function loadSong() {
             </p>
         </form>
     </div>
-    <div class="show-mobile-flex" :class="{ playlists: ui.playlistView || ui.albumView }">
+    <div class="show-mobile-flex" :class="{ playlists: ui.playlistView }">
         <button class="button is-flex-grow-1 is-dark is-active" @click="ui.playlistView = true">my library</button>
     </div>
 </template>

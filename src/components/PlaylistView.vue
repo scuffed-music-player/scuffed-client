@@ -5,8 +5,8 @@ import { ISongData, player } from "../state/player";
 import { ui } from "../state/ui";
 import { overrideQueue } from "../state/queue";
 import { playlists, currentPlaylistId, currentPlaylist } from "../state/playlists";
-import { recursivePrompt } from "../helpers/recursivePrompt";
-import { request, user } from "../state/user";
+import { question } from "../helpers/question";
+import { request } from "../helpers/request";
 import Swal from "sweetalert2";
 import Draggable from "vuedraggable";
 
@@ -31,7 +31,7 @@ function addCurrentSong() {
 
 async function renamePlaylist() {
     if (!currentPlaylist.value) return;
-    currentPlaylist.value.name = await recursivePrompt("Enter new name.", currentPlaylist.value.name);
+    currentPlaylist.value.name = await question("Enter new name.", currentPlaylist.value.name);
 }
 
 async function deletePlaylist() {
@@ -58,7 +58,7 @@ async function deletePlaylist() {
 async function updateSong(song: ISongData) {
     if (!currentPlaylist.value) return;
 
-    const title = (await recursivePrompt("What's this song called?", song.title || "")).toLowerCase();
+    const title = (await question("What's this song called?", song.title || "")).toLowerCase();
 
     const index = currentPlaylist.value.songs.findIndex(s => s.id === song.id);
 
@@ -74,46 +74,6 @@ function deleteSong(song: ISongData) {
     const index = currentPlaylist.value?.songs.findIndex(s => s.id === song.id);
     currentPlaylist.value.songs[index] = null as unknown as ISongData;
     currentPlaylist.value.songs = currentPlaylist.value.songs.filter(s => s);
-}
-
-async function uploadAlbum() {
-    if (!currentPlaylist.value) return;
-
-    const { isConfirmed } = await Swal.fire({
-        title: "If this playlist is an album, you can upload to our database. Do you want to do so?",
-        html: "To give the best experience to your fellow listeners, double-check the song order, covers, and titles.",
-        icon: "question",
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Yes",
-        cancelButtonText: "No",
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-    });
-    
-    if (!isConfirmed) return;
-
-    const name = (await recursivePrompt("What's this album called?", currentPlaylist.value?.name)).toLowerCase();
-    const artist = (await recursivePrompt("Who made the album?", "")).toLowerCase();
-
-    await Swal.fire("Thanks for contributing!", "Means a lot <33333!", "success");
-
-    const res = await request("POST")(`/api/upload`, {
-        body: JSON.stringify({
-            album: {
-                name,
-                artist,
-                songs: currentPlaylist.value.songs,
-            }
-        })
-    });
-    
-    const { success } = await res.json();
-
-    if (success) {
-        currentPlaylist.value.album = true;
-        currentPlaylist.value.name = `${artist} - ${name}`;
-    }
 }
 
 async function downloadSong({ id }: ISongData) {
