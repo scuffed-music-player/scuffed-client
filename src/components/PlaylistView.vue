@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Swal from "sweetalert2";
+import Draggable from "vuedraggable";
 import { v4 } from "uuid";
 import { GlobalEvents } from "vue-global-events";
 import { ISongData, player } from "../state/player";
@@ -7,8 +9,8 @@ import { overrideQueue } from "../state/queue";
 import { playlists, currentPlaylistId, currentPlaylist } from "../state/playlists";
 import { question } from "../helpers/question";
 import { request } from "../helpers/request";
-import Swal from "sweetalert2";
-import Draggable from "vuedraggable";
+import { toDataURL } from "../helpers/toDataURL";
+
 
 function createPlaylist() {
     const _id = v4();
@@ -76,16 +78,19 @@ function deleteSong(song: ISongData) {
     currentPlaylist.value.songs = currentPlaylist.value.songs.filter(s => s);
 }
 
-async function downloadSong({ id }: ISongData) {
+async function downloadSong({ id, thumbnail }: ISongData) {
     const songPlaylistId = currentPlaylistId.value;
     const songPlaylist = playlists.value.find(p => p._id === songPlaylistId);
 
     const res = await request("GET")(`/api/download/${id}`);
     const { success } = (await res.json()) as { success: boolean };
 
-    if (success) {
-        const song = songPlaylist?.songs.find(s => s.id === id);
-        if (song) song.downloaded = true;
+    const imageDataURL = await toDataURL(thumbnail as string);
+    const song = songPlaylist?.songs.find(s => s.id === id);
+
+    if (success && song) {
+        song.downloaded = true;
+        song.thumbnail = imageDataURL || thumbnail;
     } 
 }
 </script>
