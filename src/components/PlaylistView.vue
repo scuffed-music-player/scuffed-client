@@ -25,9 +25,14 @@ function createPlaylist() {
     currentPlaylistId.value = _id; 
 }
 
-function addCurrentSong() {
+async function addCurrentSong() {
     if (!currentPlaylist.value?.songs.find(s => player.song.id === s.id)) {
-        currentPlaylist.value?.songs.push(player.song);
+        currentPlaylist.value?.songs.push({
+            ...player.song,
+            thumbnail: (player.song.downloaded && player.song.thumbnail?.startsWith("http") ?
+                await toDataURL(player.song.thumbnail) :
+                player.song.thumbnail) as string
+        });
     }
 }
 

@@ -1,3 +1,4 @@
+import localforage from "localforage";
 import { ref, watchEffect, computed } from "vue";
 import { ISongData } from "./player";
 
@@ -12,10 +13,16 @@ export interface IPlaylist {
     }
 }
 
-export const playlists = ref<IPlaylist[]>(JSON.parse(localStorage.getItem("playlists") || "[]"));
+export const playlists = ref<IPlaylist[]>([]);
+//@ts-ignore
+window.__playlists = playlists;
 
-watchEffect(() => localStorage.setItem("playlists", JSON.stringify(playlists.value)));
-
-export const currentPlaylistId = ref(playlists.value[0]?._id || "");
-
+export const currentPlaylistId = ref("");
 export const currentPlaylist = computed(() => playlists.value.find(p => p._id == currentPlaylistId.value));
+
+(async () => {
+    playlists.value = await localforage.getItem<IPlaylist[]>("playlists") || [];
+    currentPlaylistId.value = playlists.value[0]?._id || "";
+})();
+
+watchEffect(() => localforage.setItem("playlists", JSON.parse(JSON.stringify(playlists.value))));
