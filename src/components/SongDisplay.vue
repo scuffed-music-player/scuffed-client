@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Swal from "sweetalert2";
 import { computed } from "vue";
 import { player } from "../state/player";
 import { ui } from "../state/ui";
@@ -7,6 +8,8 @@ const thumbnailURL = computed(() => player.states.playing ?
     player.song?.thumbnail :
     "https://via.placeholder.com/356x200"
 );
+
+const displaySongData = () => Swal.fire("song info", "downloaded: " + player.song.downloaded)
 </script>
 
 <template>
@@ -23,7 +26,7 @@ const thumbnailURL = computed(() => player.states.playing ?
                 <img :src="thumbnailURL || ''" alt="cover">
             </div>
             <br><br>
-            <h1 class="title is-3">
+            <h1 class="title is-3" @click="displaySongData">
                 {{ player.title }}
             </h1>
         </div>
