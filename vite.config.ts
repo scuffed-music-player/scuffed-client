@@ -9,6 +9,7 @@ export default defineConfig({
         VitePWA({
             manifest: {
                 name: "music player",
+                display: "fullscreen",
                 short_name: "music player",
                 start_url: "/",
                 background_color: "#161616",
