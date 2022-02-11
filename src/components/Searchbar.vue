@@ -53,6 +53,9 @@ async function loadSong() {
 </script>
 
 <template>
+    <div class="show-mobile-flex has-background-black px-4" style="height: 43.75px;">
+        <p style="align-self: center;">music player</p>
+    </div>
     <div class="searchbar" :class="{ playlists: ui.playlistView }">
         <b class="is-size-5 mr-5">music player</b>
         <form class="field has-addons" @submit.prevent="loadSong">
