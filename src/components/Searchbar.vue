@@ -53,7 +53,7 @@ async function loadSong() {
 </script>
 
 <template>
-    <div class="show-mobile-flex has-background-black px-4" style="height: 43.75px;">
+    <div class="show-mobile-flex has-background-black px-4" style="height: 43.75px;" :class="{ playlists: ui.playlistView }">
         <p style="align-self: center;">music player</p>
     </div>
     <div class="searchbar" :class="{ playlists: ui.playlistView }">
