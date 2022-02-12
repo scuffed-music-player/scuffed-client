@@ -23,22 +23,6 @@ const showPlayButton = computed<"on" | "disabled" | "off">(() => {
         return "disabled";
     }
 });
-
-function changePosition({ clientX, target }: MouseEvent) {
-    // console.log(clientX - (target as HTMLElement).offsetLeft);
-    // if (player.states.playing && !player.states.paused) {
-    //     const clickPos = clientX - (target as HTMLElement).offsetLeft;
-    //     const total = (target as HTMLElement).clientWidth;
-    //     const percent = clickPos / total;
-    //     const newPos = player.audio.currentTime * percent;
-
-    //     console.log({ 
-    //         newPos
-    //     });
-    //     player.audio.currentTime = newPos;
-    //     console.log(player.audio.currentTime);
-    // }   
-}
 </script>
 
 <template>
@@ -109,7 +93,6 @@ function changePosition({ clientX, target }: MouseEvent) {
                 <div
                     class="progress-filler"
                     :style="`width: ${(player.audio ? player.position / player.audio.duration : 0) * 100}%`"
-                    @click="changePosition"
                 ></div>
             </div>
 
