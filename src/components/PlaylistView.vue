@@ -19,7 +19,6 @@ function createPlaylist() {
         _id,
         name: `playlist #${playlists.value.length}`,
         songs: [],
-        album: false
     });
 
     currentPlaylistId.value = _id; 
@@ -122,7 +121,7 @@ async function downloadSong({ id, thumbnail }: ISongData) {
                     <span class="info-display">
                         {{ 
                             playlists.length > 0 ? 
-                            `current ${currentPlaylist?.album ? "album" : "playlist"}` : 
+                            `playlists` : 
                             "no playlists" 
                         }}
                     </span>
@@ -168,21 +167,7 @@ async function downloadSong({ id, thumbnail }: ISongData) {
                         </button>
                     </p>
                 </div>
-
-                <div class="field has-addons mb-0 ml-auto" v-if="currentPlaylist.album">
-                    <button 
-                        class="button is-ghost"
-                        style="pointer-events: none;"
-                    >
-                        official album
-                    </button>
-                    <button class="button is-danger" @click="deletePlaylist">
-                        <span class="icon">
-                            <span class="iconify" data-icon="gg:trash"></span>
-                        </span>
-                    </button>
-                </div>
-                <div class="field has-addons mb-0 ml-auto" v-else>
+                <div class="field has-addons mb-0 ml-auto">
                     <p 
                         v-if="player.states.playing"
                         class="control"
@@ -245,7 +230,7 @@ async function downloadSong({ id, thumbnail }: ISongData) {
 
                                 <span @dblclick="overrideQueue(element)" style="font-size: 0.85rem;">{{ element.title }}</span>
 
-                                <div class="ml-auto mr-2 field" style="min-width: 78.75px;" v-if="!currentPlaylist.album">
+                                <div class="ml-auto mr-2 field" style="min-width: 78.75px;">
                                     <button class="play-btn button is-ghost is-small" @click="updateSong(element)">
                                         <span class="icon">
                                             <span class="iconify" data-icon="mdi:playlist-edit"></span>

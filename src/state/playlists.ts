@@ -6,11 +6,6 @@ export interface IPlaylist {
     _id: string;
     name: string;
     songs: ISongData[];
-    album: boolean;
-    albumData?: {
-        name: string;
-        artist: string;
-    }
 }
 
 export const playlists = ref<IPlaylist[]>([]);
