@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { player } from "../state/player";
 import { prevSong, nextSong } from "../state/queue";
 
@@ -23,6 +23,38 @@ const showPlayButton = computed<"on" | "disabled" | "off">(() => {
         return "disabled";
     }
 });
+
+const progressBar = ref<HTMLDivElement | null>(null);
+const isMouseDown = ref(false);
+
+watchEffect(() => {
+    if (isMouseDown.value) {
+        player.states.paused = true;
+    } else {
+        player.states.paused = false;
+    }
+})
+
+function changePosition({ clientX }: MouseEvent) {
+    if (
+        !player.song.downloaded || 
+        !isMouseDown.value || 
+        !progressBar.value
+    ) return;
+
+    if (player.states.playing) {
+        const clickPos = clientX - progressBar.value.offsetLeft;
+        const total = progressBar.value.clientWidth;
+        const percent = clickPos / total;
+        console.log({ clickPos, total, percent });
+        const newPos = player.audio.duration * percent;
+        console.log({ 
+            newPos
+        });
+        player.audio.currentTime = newPos;
+        console.log(player.audio.currentTime);
+    }   
+}
 </script>
 
 <template>
@@ -89,19 +121,29 @@ const showPlayButton = computed<"on" | "disabled" | "off">(() => {
         <div class="time-display p-4">
             <span>{{ formatTime(player.position) }}</span>
 
-            <div class="progress-bar mx-4">
+            <div 
+                class="progress-bar mx-4" 
+                @mouseup="changePosition($event); isMouseDown = false;"
+                @mousemove="changePosition"
+                @mousedown="isMouseDown = true;"
+                ref="progressBar"
+                :style="{ cursor: player.song.downloaded ? 'pointer' : '' }"
+            >
                 <div
                     class="progress-filler"
-                    :style="`width: ${(player.audio ? player.position / player.audio.duration : 0) * 100}%`"
+                    :style="`
+                        width: ${(player.audio ? player.position / player.audio.duration : 0) * 100}%;
+                        background: ${player.song.downloaded ? '#48c78e' : 'white'};
+                    `"
                 ></div>
+
+                <div class="progress-gauge"></div>
             </div>
 
             <span>{{ formatTime(player.audio?.duration || 0) }}</span>
         </div>
     </div>
 </template>
-
-
 
 <style scoped>
 .control-bar {
@@ -133,10 +175,23 @@ const showPlayButton = computed<"on" | "disabled" | "off">(() => {
     overflow: hidden;
 }
 
+.progress-bar > div {
+    display: inline-block;
+}
+
 .progress-filler {
     background: white;
     border-radius: 50px;
     height: 100%;
+}
+
+.progress-gauge {
+    background: white;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    position: relative;
+    right: 15px;
 }
 
 .play-toggle {
