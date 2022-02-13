@@ -74,19 +74,39 @@ async function updateSong(song: ISongData) {
     };
 }
 
-function deleteSong(song: ISongData) {
+async function deleteSong(song: ISongData) {
     if (!currentPlaylist.value) return;
 
     const index = currentPlaylist.value?.songs.findIndex(s => s.id === song.id);
     currentPlaylist.value.songs[index] = null as unknown as ISongData;
     currentPlaylist.value.songs = currentPlaylist.value.songs.filter(s => s);
+
+    if (song.downloaded) {
+        const { isConfirmed } = await Swal.fire({
+            title: "Remove from offline library?",
+            text: "You'll need an internet connection to play this song later.",
+            showCancelButton: true,
+            confirmButtonColor: '#48C78E',
+            cancelButtonColor: '#3E8ED0',
+            confirmButtonText: 'yes pls',
+            cancelButtonText: "nah thx tho",
+            icon: "question"
+        });
+
+        if (isConfirmed) {
+            await request("DELETE")(`/api/saves/${song.id}`);
+            if (player.song.id === song.id) {
+                player.song.downloaded = false;
+            }
+        }
+    }
 }
 
 async function downloadSong({ id, thumbnail }: ISongData) {
     const songPlaylistId = currentPlaylistId.value;
     const songPlaylist = playlists.value.find(p => p._id === songPlaylistId);
 
-    const res = await request("GET")(`/api/download/${id}`);
+    const res = await request("POST")(`/api/saves/${id}`);
     const { success } = (await res.json()) as { success: boolean };
 
     const imageDataURL = await toDataURL(thumbnail as string);
