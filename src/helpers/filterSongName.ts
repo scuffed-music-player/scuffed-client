@@ -17,13 +17,14 @@ const flags = [
     "[]",
     "「amv」",
     "[amv]",
-    "[official lyric video]"
+    "[official lyric video]",
+    "「 amv 」"
 ];
 
 export const filterSongName = (name: string | null) => {
     if (!name) return "lmao idk song lol";
 
-    let n = name;
+    let n = name.toLowerCase();
     flags.forEach(flag => {
         const replaceArgs: [string, string] = Array.isArray(flag) ? [flag[0], flag[1]] : [flag, ""];
         n = n.replaceAll(...replaceArgs);
