@@ -9,7 +9,6 @@ import { overrideQueue } from "../state/queue";
 import { playlists, currentPlaylistId, currentPlaylist } from "../state/playlists";
 import { question } from "../helpers/question";
 import { request } from "../helpers/request";
-import { toDataURL } from "../helpers/toDataURL";
 
 
 function createPlaylist() {
@@ -24,14 +23,9 @@ function createPlaylist() {
     currentPlaylistId.value = _id; 
 }
 
-async function addCurrentSong() {
+function addCurrentSong() {
     if (!currentPlaylist.value?.songs.find(s => player.song.id === s.id)) {
-        currentPlaylist.value?.songs.push({
-            ...player.song,
-            thumbnail: (player.song.downloaded && player.song.thumbnail?.startsWith("http") ?
-                await toDataURL(player.song.thumbnail) :
-                player.song.thumbnail) as string
-        });
+        currentPlaylist.value?.songs.push(player.song);
     }
 }
 
@@ -107,14 +101,13 @@ async function downloadSong({ id, thumbnail }: ISongData) {
     const songPlaylist = playlists.value.find(p => p._id === songPlaylistId);
 
     const res = await request("POST")(`/api/saves/${id}`);
-    const { success } = (await res.json()) as { success: boolean };
+    const { success, thumbnail: newThumbnail } = (await res.json()) as { success: boolean, thumbnail: string };
 
-    const imageDataURL = await toDataURL(thumbnail as string);
     const song = songPlaylist?.songs.find(s => s.id === id);
 
     if (success && song) {
         song.downloaded = true;
-        song.thumbnail = imageDataURL || thumbnail;
+        song.thumbnail = newThumbnail || thumbnail;
     } 
 }
 </script>
