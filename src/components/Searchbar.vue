@@ -5,6 +5,7 @@ import { ISongData, player } from "../state/player";
 import { overrideQueue } from "../state/queue";
 import { ui } from "../state/ui";
 import { request } from "../helpers/request";
+import { filterSongName } from "../helpers/filterSongName";
 
 const query = ref("");
 
@@ -25,29 +26,7 @@ async function loadSong() {
 
     overrideQueue({
         ...videoData.song,
-        title: (videoData.song.title || "lmao idk song lol")
-            .toLowerCase()
-            .replaceAll("&quot;", "\"")
-            .replaceAll("&amp;", "&")
-            .replaceAll("[official audio]", "")
-            .replaceAll("(official audio)", "")
-            .replaceAll("full song", "")
-            .replaceAll("(audio)", "")
-            .replaceAll("audio", "")
-            .replaceAll("&#39;", "'")
-            .replaceAll("(lyrics)", "")
-            .replaceAll("(official music video)", "")
-            .replaceAll("(official music audio)", "")
-            .replaceAll("(official lyric video)", "")
-            .replaceAll("(lyric video)", "")
-            .replaceAll("(official)", "")
-            .replaceAll("(pseudo video)", "")
-            .replaceAll("()", "")
-            .replaceAll("[]", "")
-            .replaceAll("「amv」", "")
-            .replaceAll("[amv]", "")
-            .replaceAll("[official lyric video]", "")
-            .trim(),
+        title: filterSongName(videoData.song.title),
     });
 }
 </script>
