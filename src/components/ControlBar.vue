@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watchEffect } from "vue";
+import { ref, computed } from "vue";
 import { player } from "../state/player";
 import { prevSong, nextSong } from "../state/queue";
 
@@ -25,20 +25,12 @@ const showPlayButton = computed<"on" | "disabled" | "off">(() => {
 });
 
 const progressBar = ref<HTMLDivElement | null>(null);
-const isMouseDown = ref(false);
-
-watchEffect(() => {
-    if (isMouseDown.value) {
-        player.states.paused = true;
-    } else {
-        player.states.paused = false;
-    }
-})
+const progressGauge = ref<number>();
+const isMouseOver = ref(false);
 
 function changePosition({ clientX }: MouseEvent) {
     if (
         !player.song.downloaded || 
-        !isMouseDown.value || 
         !progressBar.value
     ) return;
 
@@ -123,9 +115,13 @@ function changePosition({ clientX }: MouseEvent) {
 
             <div 
                 class="progress-bar mx-4" 
-                @mouseup="changePosition($event); isMouseDown = false;"
-                @mousemove="changePosition"
-                @mousedown="isMouseDown = true;"
+                @click="changePosition"
+                @mousemove="
+                    isMouseOver = true;
+                    progressBar && (progressGauge = $event.clientX - progressBar.offsetLeft);
+                "
+                @mouseleave="isMouseOver = false;"
+
                 ref="progressBar"
                 :style="{ cursor: player.song.downloaded ? 'pointer' : '' }"
             >
@@ -137,7 +133,13 @@ function changePosition({ clientX }: MouseEvent) {
                     `"
                 ></div>
 
-                <div class="progress-gauge"></div>
+                <div 
+                    class="progress-gauge" 
+                    :style="{ 
+                        position: isMouseOver ? 'absolute' : 'relative',
+                        left: isMouseOver ? `${(progressGauge || 0)}px` : '-15px'
+                    }"
+                />
             </div>
 
             <span>{{ formatTime(player.audio?.duration || 0) }}</span>
@@ -173,6 +175,7 @@ function changePosition({ clientX }: MouseEvent) {
     border-radius: 50px;
     height: 15px;
     overflow: hidden;
+    position: relative;
 }
 
 .progress-bar > div {
@@ -190,8 +193,7 @@ function changePosition({ clientX }: MouseEvent) {
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    position: relative;
-    right: 15px;
+    position: absolute;
 }
 
 .play-toggle {
