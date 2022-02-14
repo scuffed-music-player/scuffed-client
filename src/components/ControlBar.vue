@@ -25,8 +25,6 @@ const showPlayButton = computed<"on" | "disabled" | "off">(() => {
 });
 
 const progressBar = ref<HTMLDivElement | null>(null);
-const progressGauge = ref<number>();
-const isMouseOver = ref(false);
 
 function changePosition({ clientX }: MouseEvent) {
     if (
@@ -116,12 +114,6 @@ function changePosition({ clientX }: MouseEvent) {
             <div 
                 class="progress-bar mx-4" 
                 @click="changePosition"
-                @mousemove="
-                    isMouseOver = true;
-                    progressBar && (progressGauge = $event.clientX - progressBar.offsetLeft);
-                "
-                @mouseleave="isMouseOver = false;"
-
                 ref="progressBar"
                 :style="{ cursor: player.song.downloaded ? 'pointer' : '' }"
             >
@@ -134,11 +126,7 @@ function changePosition({ clientX }: MouseEvent) {
                 ></div>
 
                 <div 
-                    class="progress-gauge" 
-                    :style="{ 
-                        position: isMouseOver ? 'absolute' : 'relative',
-                        left: isMouseOver ? `${(progressGauge || 0)}px` : '-15px'
-                    }"
+                    class="progress-gauge"
                 />
             </div>
 
@@ -193,7 +181,9 @@ function changePosition({ clientX }: MouseEvent) {
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    position: absolute;
+    position: relative;
+    right: 15px;
+    border: 3px solid #48c78e;
 }
 
 .play-toggle {
