@@ -26,6 +26,9 @@ async function play(song: ISongData) {
                 { src: player.song.thumbnail || "" }
             ]
         });
+
+        navigator.mediaSession.setActionHandler("nexttrack", nextSong);
+        navigator.mediaSession.setActionHandler("previoustrack", prevSong);
     }
 }
 
