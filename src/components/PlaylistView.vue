@@ -68,6 +68,14 @@ async function updateSong(song: ISongData) {
     };
 }
 
+async function undownloadSong(song: ISongData) {
+    await request("DELETE")(`/api/saves/${song.id}`);
+    if (player.song.id === song.id) {
+        player.song.downloaded = false;
+        song.thumbnail = `https://i.ytimg.com/vi/${song.id}/hqdefault.jpg`;
+    }
+}
+
 async function deleteSong(song: ISongData) {
     if (!currentPlaylist.value) return;
 
@@ -88,10 +96,7 @@ async function deleteSong(song: ISongData) {
         });
 
         if (isConfirmed) {
-            await request("DELETE")(`/api/saves/${song.id}`);
-            if (player.song.id === song.id) {
-                player.song.downloaded = false;
-            }
+            undownloadSong(song);
         }
     }
 }
@@ -254,7 +259,7 @@ async function downloadSong({ id, thumbnail }: ISongData) {
                                             <span class="iconify" data-icon="feather:download"></span>
                                         </span>
                                     </button>
-                                    <button v-show="element.downloaded" class="play-btn info button is-ghost is-small">
+                                    <button v-show="element.downloaded" class="play-btn info button is-ghost is-small" @click="undownloadSong(element)">
                                         <span class="icon">
                                             <span class="iconify" data-icon="feather:check-square"></span>
                                         </span>
