@@ -240,13 +240,7 @@ async function downloadSong({ id, thumbnail }: ISongData) {
                                     </span>
                                 </button>
 
-                                <button class="play-btn mr-3 button is-ghost" @click="overrideQueue(element)">
-                                    <span class="icon">
-                                        <span class="iconify" data-icon="gg:play-button-o"></span>
-                                    </span>
-                                </button>
-
-                                <span @dblclick="overrideQueue(element)" style="font-size: 0.85rem;">{{ element.title }}</span>
+                                <span @click="overrideQueue(element)" style="font-size: 0.85rem;">{{ element.title }}</span>
 
                                 <div class="ml-auto mr-2 field" style="min-width: 78.75px;">
                                     <button class="play-btn button is-ghost is-small" @click="updateSong(element)">
