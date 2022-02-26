@@ -36,13 +36,8 @@ function changePosition({ clientX }: MouseEvent) {
         const clickPos = clientX - progressBar.value.offsetLeft;
         const total = progressBar.value.clientWidth;
         const percent = clickPos / total;
-        console.log({ clickPos, total, percent });
         const newPos = player.audio.duration * percent;
-        console.log({ 
-            newPos
-        });
         player.audio.currentTime = newPos;
-        console.log(player.audio.currentTime);
     }   
 }
 </script>
