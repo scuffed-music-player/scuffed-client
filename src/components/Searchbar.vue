@@ -5,7 +5,6 @@ import { ISongData, player } from "../state/player";
 import { overrideQueue } from "../state/queue";
 import { ui } from "../state/ui";
 import { request } from "../helpers/request";
-import { filterSongName } from "../helpers/filterSongName";
 
 const query = ref("");
 
@@ -24,10 +23,7 @@ async function loadSong() {
         return await Swal.fire("couldn't find a song.", "Try some different search criteria, that search didn't work.", "error");
     }
 
-    overrideQueue({
-        ...videoData.song,
-        title: filterSongName(videoData.song.title),
-    });
+    overrideQueue(videoData.song);
 }
 </script>
 
