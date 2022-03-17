@@ -16,7 +16,7 @@ export interface IPlayer {
         loading: boolean; // Is the player currently trying to load a song?
     };
     title: string,
-    song: Partial<ISongData>; // What song is currently loaded?
+    song: ISongData; // What song is currently loaded?
     position: number; // Current place in the song.
     volume: number; // Corresponds to the volume of the player (0-100).
 }
@@ -31,9 +31,9 @@ export const player = reactive<IPlayer>({
         loading: false,
     },
     song: {
-        id: undefined,
-        title: undefined,
-        thumbnail: undefined,
+        id: "",
+        title: "",
+        thumbnail: "",
         downloaded: false,
     },
     position: 0,
