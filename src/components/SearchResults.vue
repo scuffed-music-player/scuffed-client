@@ -40,7 +40,7 @@ import { overrideQueue } from "../state/queue";
                     @click="overrideQueue(result)"
                 >
                     <div class="thumbnail mr-5" :style="`background-image: url('${result.thumbnail}');`" alt="" />
-                    <h1 class="is-size-5">{{ result.title }}</h1>
+                    <h1 class="is-size-5 mr-2">{{ result.title }}</h1>
                 </div>
             </div>
         </div>
