@@ -2,7 +2,7 @@
 import Swal from "sweetalert2";
 import { computed } from "vue";
 import { player } from "../state/player";
-import { ui } from "../state/ui";
+import { ui, hideMainView } from "../state/ui";
 
 const thumbnailURL = computed(() => player.states.playing ?
     player.song?.thumbnail :
@@ -15,7 +15,7 @@ const displaySongData = () => Swal.fire("song info", "downloaded: " + player.son
 <template>
     <div 
         class="song-display has-text-centered"
-        :class="{ playlists: ui.playlistView }"
+        :class="{ playlists: hideMainView }"
     >
         <div>
             <div 
@@ -81,5 +81,15 @@ const displaySongData = () => Swal.fire("song info", "downloaded: " + player.son
 
 .song-display.playlists > div {
     opacity: 0;
+}
+
+.title {
+    margin: 0 2rem;
+}
+
+@media screen and (max-width: 600px) {
+    .title {
+        font-size: 1.5rem;
+    }
 }
 </style>

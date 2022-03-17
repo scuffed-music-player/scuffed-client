@@ -3,16 +3,12 @@ import Swal from "sweetalert2";
 import { ref } from "vue";
 import { ISongData, player } from "../state/player";
 import { overrideQueue } from "../state/queue";
-import { ui } from "../state/ui";
+import { ui, hideMainView } from "../state/ui";
 import { request } from "../helpers/request";
 
 const query = ref("");
 
 async function loadSong() {
-    player.states.playing = false;
-    player.states.loading = true;
-    player.audio?.pause();
-
     const q = encodeURIComponent(query.value.trim().toLowerCase());
 
     const dataResponse = await request("GET")(`/api/search/${q}`);
@@ -28,10 +24,10 @@ async function loadSong() {
 </script>
 
 <template>
-    <div class="show-mobile-flex has-background-black px-4" style="height: 43.75px;" :class="{ playlists: ui.playlistView }">
+    <div class="show-mobile-flex has-background-black px-4" style="height: 43.75px;" :class="{ playlists: hideMainView }">
         <p style="align-self: center;">music player</p>
     </div>
-    <div class="searchbar" :class="{ playlists: ui.playlistView }">
+    <div class="searchbar" :class="{ playlists: hideMainView }">
         <b class="is-size-5 mr-5">music player</b>
         <form class="field has-addons" @submit.prevent="loadSong">
             <p class="control input-conent">
@@ -54,8 +50,13 @@ async function loadSong() {
             </p>
         </form>
     </div>
-    <div class="show-mobile-flex" :class="{ playlists: ui.playlistView }">
-        <button class="button is-flex-grow-1 is-dark is-active" @click="ui.playlistView = true">my library</button>
+    <div class="show-mobile-flex" :class="{ playlists: hideMainView }">
+        <button 
+            class="button is-flex-grow-1 is-dark is-active" 
+            @click="ui.playlistView.isShowing = true"
+        >
+            my library
+        </button>
     </div>
 </template>
 

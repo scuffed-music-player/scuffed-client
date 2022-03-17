@@ -1,5 +1,4 @@
 import { ISongData, player } from "./player";
-import { currentPlaylist } from "./playlists";
 import { BASE_URL } from "../helpers/request";
 
 let queue: ISongData[] = [];
@@ -7,9 +6,6 @@ let originalQueue: ISongData[] = [];
 let playedSongs: ISongData[] = [];
 
 async function play(song: ISongData) {
-    player.states.playing = false;
-    player.states.loading = true;
-    player.audio.pause();
     player.audio.src = `${BASE_URL}/api/stream/${song.id}`;
     player.audio.currentTime = 0;
     await player.audio.play();
@@ -20,8 +16,8 @@ async function play(song: ISongData) {
     if ("mediaSession" in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
             title: player.song.title || "song",
-            artist: "music player",
-            album: currentPlaylist.value?.name || player.song.title || "song",
+            artist: "ishowspeed",
+            album: "greatest hits of ishowspeed",
             artwork: [
                 { src: player.song.thumbnail || "" }
             ]

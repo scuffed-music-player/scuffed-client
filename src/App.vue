@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import SearchBar from "./components/Searchbar.vue";
+import SearchBar from "./components/SearchBar.vue";
 import SongDisplay from "./components/SongDisplay.vue";
 import ControlBar from "./components/ControlBar.vue";
 import SongBackdrop from "./components/SongBackdrop.vue";
 import PlaylistView from "./components/PlaylistView.vue";
+import SearchResults from "./components/SearchResults.vue";
 </script>
 
 <template>
@@ -14,6 +15,7 @@ import PlaylistView from "./components/PlaylistView.vue";
         <ControlBar />
     </main>
     <PlaylistView />
+    <SearchResults />
 </template>
 
 <style>

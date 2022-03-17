@@ -1,18 +1,18 @@
-import { reactive, watchEffect } from "vue";
-import { player } from "./player";
+import { computed, reactive } from "vue";
+import { ISongData } from "./player";
 
 export const ui = reactive({
     thumbnailZoomed: false,
-    playlistView: false,
-    croppedImages: {
-        landscape: "",
-        square: "",
+    playlistView: {
+        isShowing: false,
+    },
+    searchResults: {
+        isShowing: true,
+        results: [] as ISongData[]
     }
 });
 
-const canvas = document.querySelector("canvas");
-watchEffect(() => {
-    if (!player.song.thumbnail) return;
-
-
-})
+export const hideMainView = computed(() => 
+    ui.playlistView.isShowing || 
+    ui.searchResults.isShowing
+);

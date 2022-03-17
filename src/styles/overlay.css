@@ -1,0 +1,57 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 7.5rem;
+    display: flex;
+    z-index: 5;
+}
+
+.overlay {
+    left: -100vw;
+    transition: left 0.5s;
+}
+
+.overlay.open {
+    left: 0;
+}
+
+.overlay > div:first-of-type {
+    background: #16161698; 
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.close-btn {
+    border-radius: 50%;
+}
+
+.overlay-header {
+    display: flex;
+    align-items: center;
+}
+
+.overlay-header .display, .control.selector {
+    flex: 1;
+}
+
+.overlay-header h1 {
+    position: relative;
+    bottom: 1rem;
+}
+
+.overlay-header .display {
+    position: relative;
+    display: flex;   
+}
+
+.overlay-header .display .field {
+    flex: 1;
+}
+
+.overlay-header .display .info-display {
+    position: absolute;
+    top: -2rem;
+    left: 0;
+}

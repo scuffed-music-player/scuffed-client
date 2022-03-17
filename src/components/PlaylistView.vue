@@ -119,16 +119,16 @@ async function downloadSong({ id, thumbnail }: ISongData) {
 
 <template>
     <GlobalEvents 
-        v-if="ui.playlistView" 
-        @keyup.escape="ui.playlistView = false" 
+        v-if="ui.playlistView.isShowing" 
+        @keyup.escape="ui.playlistView.isShowing = false" 
     />
     
-    <div class="playlist-section overlay" :class="{ open: ui.playlistView }">
+    <div class="playlist-section overlay" :class="{ open: ui.playlistView.isShowing }">
         <div class="playlist-view py-6 px-3">
-            <div class="playlist-selector mb-1">
+            <div class="overlay-header mb-1">
                 <button 
                     class="button is-danger play-btn close-btn mr-5" 
-                    @click="ui.playlistView = false"
+                    @click="ui.playlistView.isShowing = false"
                 >
                     <div class="icon">
                         <span class="iconify" data-icon="gg:close" />
@@ -273,7 +273,7 @@ async function downloadSong({ id, thumbnail }: ISongData) {
 
         <button
             class="toggle-view button is-ghost hide-mobile" 
-            @click="ui.playlistView = true">
+            @click="ui.playlistView.isShowing = true">
             <div>
                 <span class="iconify" data-icon="gg:play-list" />
             </div>
@@ -282,18 +282,9 @@ async function downloadSong({ id, thumbnail }: ISongData) {
 </template>
 
 <style scoped>
-.playlist-section {
-    left: -100vw;
-    transition: left 0.5s;
-}
-
 .playlist {
     flex: 1;
     overflow-y: scroll;
-}
-
-.playlist-section.open {
-    left: 0;
 }
 
 button.toggle-view {
@@ -325,11 +316,6 @@ button.toggle-view svg {
     bottom: 0.125rem;
 }
 
-.playlist-selector {
-    display: flex;
-    align-items: center;
-}
-
 .song {
     display: flex;
     align-items: center;
@@ -339,32 +325,7 @@ button.toggle-view svg {
     cursor: pointer;
 }
 
-.playlist-selector .display, .control.selector {
-    flex: 1;
-}
-
 .control.selector .select, .control.selector select {
     width: 100%;
-}
-
-.playlist-selector h1 {
-    position: relative;
-    bottom: 1rem;
-}
-
-.playlist-selector .display {
-    position: relative;
-    display: flex;   
-}
-
-.playlist-selector .display .field {
-    flex: 1;
-}
-
-.playlist-selector .display .info-display {
-    content: "currently displaying";
-    position: absolute;
-    top: -2rem;
-    left: 0;
 }
 </style>
