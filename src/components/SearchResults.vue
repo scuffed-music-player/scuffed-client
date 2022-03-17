@@ -31,21 +31,32 @@ import { overrideQueue } from "../state/queue";
                 </div>
             </div>
             
-            <div 
-                v-for="result of ui.searchResults.results" 
-                :key="(result.id as string)" 
-                class="result"
-                role="button"
-                @click="overrideQueue(result)"
-            >
-                <div class="thumbnail" :style="`background-image: url('${result.thumbnail}');`" alt="" />
-                <h1 class="is-size-5 ml-5">{{ result.title }}</h1>
+            <div class="result-container">
+                <div 
+                    v-for="result of ui.searchResults.results" 
+                    :key="(result.id as string)" 
+                    class="result"
+                    role="button"
+                    @click="overrideQueue(result)"
+                >
+                    <div class="thumbnail mr-5" :style="`background-image: url('${result.thumbnail}');`" alt="" />
+                    <h1 class="is-size-5">{{ result.title }}</h1>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped>
+.search-section > div {
+    display: flex;
+}
+
+.result-container {
+    flex: 1;
+    overflow-y: scroll;
+}
+
 .result {
     display: flex;
     align-items: center;
@@ -54,7 +65,7 @@ import { overrideQueue } from "../state/queue";
 }
 
 .thumbnail {
-    width: 100px;
+    min-width: 100px;
     aspect-ratio: 16 / 9;
     background-size: 100px calc(calc(100px / 0.75) * calc(9 / 16));
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
