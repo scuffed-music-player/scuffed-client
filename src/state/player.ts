@@ -1,9 +1,9 @@
 import { reactive, watchEffect } from "vue";
 
 export interface ISongData {
-    id: string | null;
-    title: string | null;
-    thumbnail: string | null;
+    id: string;
+    title: string;
+    thumbnail: string;
     downloaded: boolean;
 }
 
@@ -16,7 +16,7 @@ export interface IPlayer {
         loading: boolean; // Is the player currently trying to load a song?
     };
     title: string,
-    song: ISongData; // What song is currently loaded?
+    song: Partial<ISongData>; // What song is currently loaded?
     position: number; // Current place in the song.
     volume: number; // Corresponds to the volume of the player (0-100).
 }
@@ -31,9 +31,9 @@ export const player = reactive<IPlayer>({
         loading: false,
     },
     song: {
-        id: null,
-        title: null,
-        thumbnail: null,
+        id: undefined,
+        title: undefined,
+        thumbnail: undefined,
         downloaded: false,
     },
     position: 0,

@@ -123,7 +123,7 @@ async function downloadSong({ id, thumbnail }: ISongData) {
         @keyup.escape="ui.playlistView.isShowing = false" 
     />
     
-    <div class="playlist-section overlay" :class="{ open: ui.playlistView.isShowing }">
+    <div class="playlist-section overlay side-left" :class="{ open: ui.playlistView.isShowing }">
         <div class="playlist-view py-6 px-3">
             <div class="overlay-header mb-1">
                 <button 

@@ -1,18 +1,27 @@
 .overlay {
     position: fixed;
     top: 0;
-    bottom: 7.5rem;
+    bottom: 8.025rem;
     display: flex;
     z-index: 5;
 }
 
-.overlay {
+.overlay.side-left {
     left: -100vw;
     transition: left 0.5s;
 }
 
-.overlay.open {
+.overlay.side-left.open {
     left: 0;
+}
+
+.overlay.side-right {
+    right: -100vw;
+    transition: right 0.5s;
+}
+
+.overlay.side-right.open {
+    right: 0;
 }
 
 .overlay > div:first-of-type {

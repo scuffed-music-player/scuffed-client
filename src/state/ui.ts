@@ -7,7 +7,8 @@ export const ui = reactive({
         isShowing: false,
     },
     searchResults: {
-        isShowing: true,
+        query: "",
+        isShowing: false,
         results: [] as ISongData[]
     }
 });

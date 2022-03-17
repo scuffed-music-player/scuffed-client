@@ -2,7 +2,6 @@
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { ISongData, player } from "../state/player";
-import { overrideQueue } from "../state/queue";
 import { ui, hideMainView } from "../state/ui";
 import { request } from "../helpers/request";
 
@@ -12,14 +11,16 @@ async function loadSong() {
     const q = encodeURIComponent(query.value.trim().toLowerCase());
 
     const dataResponse = await request("GET")(`/api/search/${q}`);
-    const videoData = await dataResponse.json() as { success: boolean, song: ISongData };
+    const videoData = await dataResponse.json() as { success: boolean, songs: ISongData[] };
 
     if (!videoData.success) {
         player.states.loading = false;
         return await Swal.fire("couldn't find a song.", "Try some different search criteria, that search didn't work.", "error");
     }
 
-    overrideQueue(videoData.song);
+    ui.searchResults.query = query.value;
+    ui.searchResults.results = videoData.songs;
+    ui.searchResults.isShowing = true;
 }
 </script>
 
