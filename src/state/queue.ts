@@ -15,9 +15,9 @@ async function play(song: ISongData, initialPosition: number = 0) {
 
     if ("mediaSession" in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
-            title: player.song.title || "song",
-            artist: "ishowspeed",
-            album: "greatest hits of ishowspeed",
+            title: player.song.title,
+            artist: player.song.artist,
+            album: "greatest hits!",
             artwork: [
                 { src: player.song.thumbnail || "" }
             ]
