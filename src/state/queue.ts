@@ -5,9 +5,9 @@ let queue: ISongData[] = [];
 let originalQueue: ISongData[] = [];
 let playedSongs: ISongData[] = [];
 
-async function play(song: ISongData) {
+async function play(song: ISongData, initialPosition: number = 0) {
     player.audio.src = `${BASE_URL}/api/stream/${song.id}`;
-    player.audio.currentTime = 0;
+    player.audio.currentTime = initialPosition;
     await player.audio.play();
     player.song = song;
     player.states.loading = false;
