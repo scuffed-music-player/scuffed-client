@@ -1,19 +1,11 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { player } from "../state/player";
 import { ui } from "../state/ui";
-
-const thumbnailURL = computed(() => player.states.playing ?
-    player.song?.thumbnail :
-    "https://via.placeholder.com/356x200"
-);
 </script>
 
 <template>
     <div
         class="song-backdrop"
-        :class="{ zoomed: ui.thumbnailZoomed }"
-        :style="`background-image: url(${thumbnailURL});`" 
+        :style="`background-${ui.thumbnail !== '' ? 'image' : 'color'}: ${ui.thumbnail !== '' ? `url(${ui.thumbnail})` : '#131313'};`" 
     />
 </template>
 
@@ -32,7 +24,9 @@ const thumbnailURL = computed(() => player.states.playing ?
     transition: transform 0.25s;
 }
 
-.song-backdrop.zoomed {
-    transform: scale(2);
+@media screen and (max-width: 600px) {
+    .song-backdrop {
+        transform: scale(2);
+    }
 }
 </style>

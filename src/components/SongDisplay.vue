@@ -1,15 +1,6 @@
 <script setup lang="ts">
-import Swal from "sweetalert2";
-import { computed } from "vue";
 import { player } from "../state/player";
 import { ui, hideMainView } from "../state/ui";
-
-const thumbnailURL = computed(() => player.states.playing ?
-    player.song?.thumbnail :
-    "https://via.placeholder.com/356x200"
-);
-
-const displaySongData = () => Swal.fire("song info", "downloaded: " + player.song.downloaded)
 </script>
 
 <template>
@@ -20,13 +11,11 @@ const displaySongData = () => Swal.fire("song info", "downloaded: " + player.son
         <div>
             <div 
                 class="thumbnail"
-                :class="{ zoomed: ui.thumbnailZoomed }"
-                @click="ui.thumbnailZoomed = !ui.thumbnailZoomed"
             >
-                <img :src="thumbnailURL || ''" alt="cover">
+                <img v-if="ui.thumbnail !== ''" :src="ui.thumbnail" alt="cover">
             </div>
             <br><br>
-            <h1 class="title is-3" @click="displaySongData">
+            <h1 class="title is-3">
                 {{ player.title }}
             </h1>
         </div>
@@ -43,28 +32,16 @@ const displaySongData = () => Swal.fire("song info", "downloaded: " + player.son
     width: calc(calc(16 / 9) * var(--height));
     height: var(--height);
     border-radius: 30px;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 0 50px black;
+    background-color: black;
     transition: width 0.25s, transform 0.25s;
     cursor: pointer;
-}
-
-.thumbnail:hover {
-    transform: scale(1.125);
 }
 
 .thumbnail img {
     width: 100%;
     transform: none;
     transition: transform 0.25s;
-}
-
-.thumbnail.zoomed {
-    width: var(--height);
-    border-radius: 10px;
-}
-
-.thumbnail.zoomed img {
-    transform: scale(calc(calc(16 / 9) + 0.02));
 }
 
 .song-display, .song-display > div {
@@ -90,6 +67,15 @@ const displaySongData = () => Swal.fire("song info", "downloaded: " + player.son
 @media screen and (max-width: 600px) {
     .title {
         font-size: 1.5rem;
+    }
+
+    .thumbnail {
+        width: var(--height);
+        border-radius: 10px;
+    }
+
+    .thumbnail img {
+        transform: scale(calc(calc(16 / 9) + 0.02));
     }
 }
 </style>

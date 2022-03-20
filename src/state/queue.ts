@@ -1,5 +1,7 @@
 import { ISongData, player } from "./player";
 import { BASE_URL } from "../helpers/request";
+import { watchEffect } from "vue";
+import { ui } from "./ui";
 
 let queue: ISongData[] = [];
 let originalQueue: ISongData[] = [];
@@ -14,19 +16,21 @@ async function play(song: ISongData, initialPosition: number = 0) {
     player.states.playing = true;
 
     if ("mediaSession" in navigator) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-            title: player.song.title,
-            artist: player.song.artist,
-            album: "greatest hits!",
-            artwork: [
-                { src: player.song.thumbnail || "" }
-            ]
-        });
-
         navigator.mediaSession.setActionHandler("nexttrack", nextSong);
         navigator.mediaSession.setActionHandler("previoustrack", prevSong);
     }
 }
+
+watchEffect(() => {
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: player.song.title,
+        artist: player.song.artist,
+        album: "greatest hits!",
+        artwork: [
+            { src: ui.thumbnail || "" }
+        ]
+    });
+})
 
 export function overrideQueue(...songs: ISongData[]) {
     queue = [...songs];
