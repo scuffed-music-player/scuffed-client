@@ -27,7 +27,7 @@ import { overrideQueue } from "../state/queue";
                         search results for
                     </span>
 
-                    <h3 class="is-size-4">"{{ ui.searchResults.query }}"</h3>
+                    <h3 class="is-size-4">"{{ ui.searchResults.query.toLowerCase() }}"</h3>
                 </div>
             </div>
             
@@ -40,7 +40,10 @@ import { overrideQueue } from "../state/queue";
                     @click="overrideQueue(result)"
                 >
                     <div class="thumbnail mr-5" :style="`background-image: url('${result.thumbnail}');`" alt="" />
-                    <h1 class="is-size-5 mr-2">{{ result.title }}</h1>
+                    <div>
+                        <h1 class="is-size-5 mr-2">{{ result.title }}</h1>
+                        <h2>{{ result.artist }}</h2>
+                    </div>
                 </div>
             </div>
         </div>

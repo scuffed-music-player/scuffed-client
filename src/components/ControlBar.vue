@@ -122,6 +122,7 @@ function changePosition({ clientX }: MouseEvent) {
 
                 <div 
                     class="progress-gauge"
+                    :style="`border-color: ${player.song.downloaded ? '#48c78e' : 'white'};`"
                 />
             </div>
 

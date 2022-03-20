@@ -225,48 +225,37 @@ async function downloadSong({ id, thumbnail }: ISongData) {
                         no songs in this playlist
                     </h3>
 
-                    <Draggable 
-                        v-model="currentPlaylist.songs" 
-                        item-key="id"
-                        tag="ul"
-                        class="songs-list"
-                        handle=".drag-handle"
-                    >
-                        <template #item="{ element }">
-                            <li class="mb-2 is-size-6 song">
-                                <button class="drag-handle button is-ghost">
+                    <div class="songs-list">
+                        <li class="mb-2 is-size-6 song" v-for="element in currentPlaylist.songs" :key="element.id">
+                            <div role="button"  @click="overrideQueue(element)" style="cursor: pointer;">
+                                <p class="is-size-6">{{ element.title }}</p>
+                                <p class="is-size-7">{{ element.artist }}</p>
+                            </div>
+
+                            <div class="ml-auto mr-2 field" style="min-width: 78.75px;">
+                                <button class="play-btn button is-ghost is-small" @click="updateSong(element)">
                                     <span class="icon">
-                                        <span class="iconify" data-icon="ic:round-drag-handle"></span>
+                                        <span class="iconify" data-icon="mdi:playlist-edit"></span>
                                     </span>
                                 </button>
-
-                                <span @click="overrideQueue(element)" style="font-size: 0.85rem;">{{ element.title }}</span>
-
-                                <div class="ml-auto mr-2 field" style="min-width: 78.75px;">
-                                    <button class="play-btn button is-ghost is-small" @click="updateSong(element)">
-                                        <span class="icon">
-                                            <span class="iconify" data-icon="mdi:playlist-edit"></span>
-                                        </span>
-                                    </button>
-                                    <button v-show="!element.downloaded" class="play-btn active button is-ghost is-small" @click="downloadSong(element)">
-                                        <span class="icon">
-                                            <span class="iconify" data-icon="feather:download"></span>
-                                        </span>
-                                    </button>
-                                    <button v-show="element.downloaded" class="play-btn info button is-ghost is-small" @click="undownloadSong(element)">
-                                        <span class="icon">
-                                            <span class="iconify" data-icon="feather:check-square"></span>
-                                        </span>
-                                    </button>
-                                    <button class="play-btn delete-btn button is-ghost is-small" @click="deleteSong(element)">
-                                        <span class="icon">
-                                            <span class="iconify" data-icon="gg:trash"></span>
-                                        </span>
-                                    </button>
-                                </div>
-                            </li>
-                        </template>
-                    </Draggable>
+                                <button v-show="!element.downloaded" class="play-btn active button is-ghost is-small" @click="downloadSong(element)">
+                                    <span class="icon">
+                                        <span class="iconify" data-icon="feather:download"></span>
+                                    </span>
+                                </button>
+                                <button v-show="element.downloaded" class="play-btn info button is-ghost is-small" @click="undownloadSong(element)">
+                                    <span class="icon">
+                                        <span class="iconify" data-icon="feather:check-square"></span>
+                                    </span>
+                                </button>
+                                <button class="play-btn delete-btn button is-ghost is-small" @click="deleteSong(element)">
+                                    <span class="icon">
+                                        <span class="iconify" data-icon="gg:trash"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </div>
                 </template>
             </div>
         </div>

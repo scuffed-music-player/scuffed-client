@@ -3,6 +3,7 @@ import { reactive, watchEffect } from "vue";
 export interface ISongData {
     id: string;
     title: string;
+    artist: string;
     thumbnail: string;
     downloaded: boolean;
 }
@@ -33,6 +34,7 @@ export const player = reactive<IPlayer>({
     song: {
         id: "",
         title: "",
+        artist: "",
         thumbnail: "",
         downloaded: false,
     },
