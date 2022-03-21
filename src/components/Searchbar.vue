@@ -27,8 +27,23 @@ async function loadSong() {
 </script>
 
 <template>
-    <div class="show-mobile-flex has-background-black px-4" style="height: 43.75px;" :class="{ playlists: hideMainView }">
-        <p style="align-self: center;">music player</p>
+    <div 
+        class="show-mobile-flex has-background-black" 
+        style="height: 43.75px; align-items: stretch;" 
+        :class="{ playlists: hideMainView }"
+    >
+        <p class="px-4 my-auto">music player</p>
+        <button 
+            class="button is-black is-medium ml-auto" 
+            style="height: 100%;" 
+            @click="ui.playlistView.isShowing = true"
+        >
+            <div class="icon mr-1">
+                <span class="iconify" data-icon="gg:play-list" />
+            </div>
+
+            <span class="is-size-6">library</span>
+        </button>
     </div>
     <div class="searchbar" :class="{ playlists: hideMainView }">
         <b class="is-size-5 mr-5">music player</b>
@@ -42,7 +57,7 @@ async function loadSong() {
                     required
                 />
             </p>
-            <p class="control">
+            <p class="control ml-1">
                 <button 
                     class="button is-success is-medium" 
                     type="submit"
@@ -54,14 +69,6 @@ async function loadSong() {
             </p>
         </form>
     </div>
-    <div class="show-mobile-flex" :class="{ playlists: hideMainView }">
-        <button 
-            class="button is-flex-grow-1 is-dark is-active" 
-            @click="ui.playlistView.isShowing = true"
-        >
-            my library
-        </button>
-    </div>
 </template>
 
 <style scoped>
@@ -69,6 +76,7 @@ async function loadSong() {
     display: flex;
     align-items: center;
     padding: 1rem;
+    background: #161616;
 }
 
 .searchbar, .show-mobile-flex {
@@ -82,6 +90,14 @@ async function loadSong() {
 
 .field, .control.input-conent {
     flex: 1;
+}
+
+input {
+    z-index: 0;
+}
+
+button {
+    z-index: 2;
 }
 
 @media screen and (max-width: 800px) {
