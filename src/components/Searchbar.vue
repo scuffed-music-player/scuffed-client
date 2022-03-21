@@ -6,10 +6,12 @@ import { ui, hideMainView } from "../state/ui";
 import { request } from "../helpers/request";
 
 const query = ref("");
+const searchInput = ref<HTMLInputElement | null>(null);
 
 async function loadSong() {
     const q = encodeURIComponent(query.value.trim().toLowerCase());
 
+    searchInput.value?.blur();
     const dataResponse = await request("GET")(`/api/search/${q}`);
     const videoData = await dataResponse.json() as { success: boolean, songs: ISongData[] };
 
@@ -35,6 +37,7 @@ async function loadSong() {
                 <input 
                     class="input is-medium" 
                     v-model="query" 
+                    ref="searchInput"
                     placeholder="search a song" 
                     required
                 />
