@@ -41,8 +41,8 @@ import { overrideQueue } from "../state/queue";
                 >
                     <div class="thumbnail mr-5" :style="`background-image: url('${result.thumbnail}');`" alt="" />
                     <div>
-                        <h1 class="is-size-5 mr-2">{{ result.title }}</h1>
-                        <h2>{{ result.artist }}</h2>
+                        <h1 class="is-size-6 mr-2">{{ result.title }}</h1>
+                        <h2 class="is-size-7">{{ result.artist }}</h2>
                     </div>
                 </div>
             </div>
@@ -68,8 +68,8 @@ import { overrideQueue } from "../state/queue";
 }
 
 .thumbnail {
-    min-width: 100px;
-    aspect-ratio: 16 / 9;
+    min-width: 56.25px;
+    height: 56.25px;
     background-size: 100px calc(calc(100px / 0.75) * calc(9 / 16));
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
     background-position: center center;
