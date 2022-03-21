@@ -33,7 +33,7 @@ import { ui, hideMainView } from "../state/ui";
     height: var(--height);
     border-radius: 30px;
     box-shadow: 0 0 50px black;
-    background-color: black;
+    background-color: #090909;
     transition: width 0.25s, transform 0.25s;
     cursor: pointer;
 }

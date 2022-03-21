@@ -24,7 +24,7 @@ import { overrideQueue } from "../state/queue";
 
                 <div class="display">
                     <span class="info-display">
-                        search results for
+                        results for
                     </span>
 
                     <h3 class="is-size-4">"{{ ui.searchResults.query.toLowerCase() }}"</h3>

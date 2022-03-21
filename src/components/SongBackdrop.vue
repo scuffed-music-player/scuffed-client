@@ -5,7 +5,7 @@ import { ui } from "../state/ui";
 <template>
     <div
         class="song-backdrop"
-        :style="`background-${ui.thumbnail !== '' ? 'image' : 'color'}: ${ui.thumbnail !== '' ? `url(${ui.thumbnail})` : '#131313'};`" 
+        :style="`background-${ui.thumbnail !== '' ? 'image' : 'color'}: ${ui.thumbnail !== '' ? `url(${ui.thumbnail})` : '#1f3b2e'};`" 
     />
 </template>
 
