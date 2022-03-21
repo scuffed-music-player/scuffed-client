@@ -58,13 +58,15 @@ async function deletePlaylist() {
 async function updateSong(song: ISongData) {
     if (!currentPlaylist.value) return;
 
-    const title = (await question("What's this song called?", song.title || "")).toLowerCase();
+    const title = (await question("what's this song called?", song.title || "")).toLowerCase();
+    const artist = (await question("who made it?", song.artist || "")).toLowerCase();
 
     const index = currentPlaylist.value.songs.findIndex(s => s.id === song.id);
 
     currentPlaylist.value.songs[index] = {
         ...song,
-        title: title?.length > 0 ? title : song.title, 
+        title: title?.length > 0 ? title : song.title,
+        artist: artist?.length > 0 ? artist : song.artist, 
     };
 }
 
