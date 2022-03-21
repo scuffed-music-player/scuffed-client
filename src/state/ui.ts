@@ -1,4 +1,5 @@
 import { computed, reactive, watchEffect } from "vue";
+import { BASE_URL } from "../helpers/request";
 import { player, ISongData } from "./player";
 
 export const ui = reactive({
@@ -21,7 +22,7 @@ cropCanvas.height = 270;
 watchEffect(() => {
     const image = new Image();
     image.crossOrigin = "anonymous";
-    image.src = player.song.thumbnail;
+    image.src = `${BASE_URL}/api/proxy/${encodeURIComponent(player.song.thumbnail)}`;
     image.addEventListener("load", () => {
         cropCtx.clearRect(0, 0, cropCanvas.width, cropCanvas.height);
         cropCtx.drawImage(image, 0, 45, 480, 270, 0, 0, 480, 270);
