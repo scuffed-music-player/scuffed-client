@@ -29,19 +29,19 @@ import { ui, hideMainView } from "../state/ui";
     overflow: hidden;
     justify-content: center;
     align-items: center;
-    width: calc(calc(16 / 9) * var(--height));
     height: var(--height);
-    border-radius: 30px;
     box-shadow: 0 0 50px black;
     background-color: #090909;
     transition: width 0.25s, transform 0.25s;
-    cursor: pointer;
+    width: var(--height);
+    border-radius: 10px;
 }
 
 .thumbnail img {
     width: 100%;
     transform: none;
     transition: transform 0.25s;
+    transform: scale(calc(calc(16 / 9) + 0.02));
 }
 
 .song-display, .song-display > div {
@@ -62,20 +62,6 @@ import { ui, hideMainView } from "../state/ui";
 
 .title {
     margin: 0 2rem;
-}
-
-@media screen and (max-width: 600px) {
-    .title {
-        font-size: 1.5rem;
-    }
-
-    .thumbnail {
-        width: var(--height);
-        border-radius: 10px;
-    }
-
-    .thumbnail img {
-        transform: scale(calc(calc(16 / 9) + 0.02));
-    }
+    font-size: 1.5rem;
 }
 </style>
