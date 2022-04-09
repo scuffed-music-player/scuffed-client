@@ -28,7 +28,7 @@ async function loadSong() {
 
 <template>
     <div 
-        class="show-mobile-flex has-background-black" 
+        class="app-heading is-flex has-background-black" 
         style="height: 43.75px; align-items: stretch;" 
         :class="{ playlists: hideMainView }"
     >
@@ -46,7 +46,6 @@ async function loadSong() {
         </button>
     </div>
     <div class="searchbar" :class="{ playlists: hideMainView }">
-        <b class="is-size-5 mr-5">music player</b>
         <form class="field has-addons" @submit.prevent="loadSong">
             <p class="control input-conent">
                 <input 
@@ -75,11 +74,10 @@ async function loadSong() {
 .searchbar {
     display: flex;
     align-items: center;
-    padding: 1rem;
     background: #161616;
 }
 
-.searchbar, .show-mobile-flex {
+.searchbar, .app-heading {
     opacity: 1;
     transition: opacity 0.5s;
 }
@@ -100,17 +98,7 @@ button {
     z-index: 2;
 }
 
-@media screen and (max-width: 800px) {
-    .is-size-5 {
-        display: none;
-    }
-
-    .searchbar {
-        padding: 0;
-    }
-
-    input, button {
-        border-radius: 0 !important;
-    }
+input, button {
+    border-radius: 0 !important;
 }
 </style>

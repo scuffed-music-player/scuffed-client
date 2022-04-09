@@ -250,14 +250,6 @@ async function downloadSong({ id, thumbnail }: ISongData) {
                 </template>
             </div>
         </div>
-
-        <button
-            class="toggle-view button is-ghost hide-mobile" 
-            @click="ui.playlistView.isShowing = true">
-            <div>
-                <span class="iconify" data-icon="gg:play-list" />
-            </div>
-        </button>
     </div>
 </template>
 
@@ -267,33 +259,9 @@ async function downloadSong({ id, thumbnail }: ISongData) {
     overflow-y: scroll;
 }
 
-button.toggle-view {
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin: auto 0;
-    position: relative;
-    left: 1.5rem;
-    top: 4rem;
-    border-radius: 15px 15px;
-    font-size: 2rem;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5) !important;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-}
-
-button.toggle-view > div {
-    height: 2rem;
-}
-
 .field.has-addons {
     overflow: hidden;
     border-radius: 4px;
-}
-
-button.toggle-view svg {
-    position: relative;
-    bottom: 0.125rem;
 }
 
 .song {
