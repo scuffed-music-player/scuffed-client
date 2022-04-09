@@ -1,11 +1,24 @@
 <script setup lang="ts">
 import { GlobalEvents } from "vue-global-events";
-import { ui } from "../state/ui";
+import { IAlbumData, ui } from "../state/ui";
 import { overrideQueue } from "../state/queue";
 import { reactive, ref } from "vue";
+import { playlists } from "../state/playlists";
+import { v4 } from "uuid";
+import Swal from "sweetalert2";
 
 const tabs = reactive(["songs", "albums"]);
 const currentTab = ref("songs");
+
+function addAlbum(album: IAlbumData) {
+    playlists.value.push({
+        _id: v4(),
+        name: album.title,
+        songs: album.songs,
+    });
+    
+    Swal.fire("added to playlists!", `go to your library to listen to ${album.title}!`, "success");
+}
 </script>
 
 <template>
@@ -58,6 +71,20 @@ const currentTab = ref("songs");
                     v-show="currentTab === 'songs'"
                 >
                     <div class="thumbnail mr-5" :style="`background-image: url('${result.thumbnail}');`" alt="" />
+                    <div>
+                        <h1 class="is-size-6 mr-2">{{ result.title }}</h1>
+                        <h2 class="is-size-7">{{ result.artist }}</h2>
+                    </div>
+                </div>
+                <div 
+                    v-for="result of ui.searchResults.albums" 
+                    :key="(result.id as string)" 
+                    class="result"
+                    role="button"
+                    @click="addAlbum(result)"
+                    v-show="currentTab === 'albums'"
+                >
+                    <div class="thumbnail mr-5" :style="`background-image: url('${result.thumbnail}');`" alt="album cover" />
                     <div>
                         <h1 class="is-size-6 mr-2">{{ result.title }}</h1>
                         <h2 class="is-size-7">{{ result.artist }}</h2>

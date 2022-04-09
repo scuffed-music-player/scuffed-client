@@ -2,6 +2,14 @@ import { computed, reactive, watchEffect } from "vue";
 import { BASE_URL } from "../helpers/request";
 import { player, ISongData } from "./player";
 
+export interface IAlbumData {
+    id: string;
+    title: string;
+    artist: string;
+    thumbnail: string;
+    songs: ISongData[];
+}
+
 export const ui = reactive({
     thumbnail: "",
     playlistView: {
@@ -10,7 +18,8 @@ export const ui = reactive({
     searchResults: {
         query: "",
         isShowing: false,
-        songs: [] as ISongData[]
+        songs: [] as ISongData[],
+        albums: [] as IAlbumData[],
     }
 });
 

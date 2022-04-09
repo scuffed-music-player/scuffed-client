@@ -2,7 +2,7 @@
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { ISongData, player } from "../state/player";
-import { ui, hideMainView } from "../state/ui";
+import { ui, hideMainView, IAlbumData } from "../state/ui";
 import { request } from "../helpers/request";
 
 const query = ref("");
@@ -19,7 +19,7 @@ async function loadSong() {
 
     searchInput.value?.blur();
     const dataResponse = await request("GET")(`/api/search/${q}`);
-    const videoData = await dataResponse.json() as { success: boolean, songs: ISongData[] };
+    const videoData = await dataResponse.json() as { success: boolean, songs: ISongData[], albums: IAlbumData[] };
 
     if (!videoData.success) {
         player.states.loading = false;
@@ -28,6 +28,7 @@ async function loadSong() {
 
     ui.searchResults.query = query.value;
     ui.searchResults.songs = videoData.songs;
+    ui.searchResults.albums = videoData.albums;
     ui.searchResults.isShowing = true;
 }
 </script>
