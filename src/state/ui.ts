@@ -10,7 +10,7 @@ export const ui = reactive({
     searchResults: {
         query: "",
         isShowing: false,
-        results: [] as ISongData[]
+        songs: [] as ISongData[]
     }
 });
 
@@ -27,7 +27,6 @@ watchEffect(() => {
         cropCtx.clearRect(0, 0, cropCanvas.width, cropCanvas.height);
         cropCtx.drawImage(image, 0, 45, 480, 270, 0, 0, 480, 270);
         ui.thumbnail = cropCanvas.toDataURL();
-        console.log(ui.thumbnail);
     });
 });
 

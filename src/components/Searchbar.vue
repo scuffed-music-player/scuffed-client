@@ -9,6 +9,12 @@ const query = ref("");
 const searchInput = ref<HTMLInputElement | null>(null);
 
 async function loadSong() {
+    // Same query as last time, don't waste a request:
+    if (ui.searchResults.query.trim().toLowerCase() === query.value.trim().toLowerCase()) {
+        ui.searchResults.isShowing = true;
+        return;
+    }
+
     const q = encodeURIComponent(query.value.trim().toLowerCase());
 
     searchInput.value?.blur();
@@ -21,7 +27,7 @@ async function loadSong() {
     }
 
     ui.searchResults.query = query.value;
-    ui.searchResults.results = videoData.songs;
+    ui.searchResults.songs = videoData.songs;
     ui.searchResults.isShowing = true;
 }
 </script>
