@@ -4,7 +4,7 @@ import { ui } from "../state/ui";
 import { overrideQueue } from "../state/queue";
 import { reactive, ref } from "vue";
 
-const tabs = reactive(["songs", "albums", "playlists"]);
+const tabs = reactive(["songs", "albums"]);
 const currentTab = ref("songs");
 </script>
 
