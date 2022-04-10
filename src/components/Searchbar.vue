@@ -39,7 +39,7 @@ async function loadSong() {
         style="height: 43.75px; align-items: stretch;" 
         :class="{ playlists: hideMainView }"
     >
-        <p class="px-4 my-auto">music player</p>
+        <p class="px-4 my-auto">scuffed</p>
         <button 
             class="button is-black is-medium ml-auto" 
             style="height: 100%;" 

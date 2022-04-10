@@ -8,9 +8,9 @@ export default defineConfig({
         vue(),
         VitePWA({
             manifest: {
-                name: "music player",
+                name: "scuffed",
                 display: "fullscreen",
-                short_name: "music player",
+                short_name: "scuffed",
                 start_url: "/",
                 background_color: "#161616",
                 description: ":0",
