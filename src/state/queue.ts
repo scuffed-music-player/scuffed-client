@@ -61,7 +61,7 @@ export function nextSong() {
         if (queue.length > 0) {
             play(queue[0]);
         } else if (originalQueue.length > 0) {
-            queue = originalQueue;
+            queue = [...originalQueue];
             play(queue[0]);
         }
     }
