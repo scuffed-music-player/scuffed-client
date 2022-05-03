@@ -98,7 +98,7 @@ async function downloadSong({ id, thumbnail }: ISongData) {
 
     const song = songPlaylist?.songs.find(s => s.id === id);
 
-    if (success && song) {
+    if (success && song?.id === player.song.id) {
         song.downloaded = true;
         song.thumbnail = newThumbnail || thumbnail;
         const pos = player.audio.currentTime;
